@@ -1,0 +1,157 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-heading: var(--font-cormorant), 'Cormorant Garamond', serif;
+  --font-serif: var(--font-cormorant), 'Cormorant Garamond', serif;
+  --font-sans: var(--font-geist-sans), 'Geist Fallback', sans-serif;
+  --font-mono: var(--font-geist-mono), 'Geist Mono Fallback', monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+}
+
+:root {
+  color-scheme: dark;
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #0a0a0a;
+  --card-foreground: #ffffff;
+  --popover: #111111;
+  --popover-foreground: #ffffff;
+  --primary: #f36b21;
+  --primary-foreground: #000000;
+  --secondary: #111111;
+  --secondary-foreground: #ffffff;
+  --muted: #161616;
+  --muted-foreground: #8a8a8a;
+  --accent: #f36b21;
+  --accent-foreground: #000000;
+  --destructive: #ef4444;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #f36b21;
+  --radius: 0.25rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/40;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    @apply bg-background text-foreground;
+    overflow-x: hidden;
+  }
+}
+
+@utility tracking-luxury {
+  letter-spacing: 0.35em;
+}
+
+@utility tracking-wide-lux {
+  letter-spacing: 0.2em;
+}
+
+/* Hide scrollbar for cinematic intro lock */
+.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* Brushed metal engraved logo effect */
+.engraved {
+  background: linear-gradient(
+    180deg,
+    #ffb27a 0%,
+    #f36b21 35%,
+    #b94e16 65%,
+    #f89a5e 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+/* Light sweep across the intro logo */
+.light-sweep {
+  position: relative;
+  overflow: hidden;
+}
+.light-sweep::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  animation: sweep 2.6s ease-in-out 0.8s forwards;
+  mix-blend-mode: overlay;
+}
+@keyframes sweep {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+/* Floating dust particles */
+@keyframes drift {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.7;
+  }
+  80% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-120px) translateX(20px);
+    opacity: 0;
+  }
+}
+
+.hairline {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.18),
+    transparent
+  );
+}
