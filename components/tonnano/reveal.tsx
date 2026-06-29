@@ -2,8 +2,7 @@
 
 import { motion } from 'motion/react'
 import type { ReactNode } from 'react'
-
-const EASE = [0.22, 1, 0.36, 1] as const
+import { EASE, fadeUpVariant, usePrefersReducedMotion } from './animation'
 
 export function Reveal({
   children,
@@ -18,13 +17,22 @@ export function Reveal({
   className?: string
   once?: boolean
 }) {
+  const prefersReduced = usePrefersReducedMotion()
+
+  if (prefersReduced) {
+    return <div className={className}>{children}</div>
+  }
+
+  const variants = fadeUpVariant(y)
+
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      variants={variants}
+      initial="initial"
+      whileInView="enter"
       viewport={{ once, margin: '-80px' }}
-      transition={{ duration: 1.1, ease: EASE, delay }}
+      transition={{ duration: 0.9, ease: EASE as any, delay }}
     >
       {children}
     </motion.div>
