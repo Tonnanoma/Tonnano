@@ -1,31 +1,16 @@
 'use client'
 
 import { IMAGES } from '@/lib/site'
-import { motion, useScroll, useTransform } from 'motion/react'
+import { motion } from 'motion/react'
 import Image from 'next/image'
 import { useRef } from 'react'
-import { EASE, stagger, fadeUpVariant, usePrefersReducedMotion } from './animation'
+import { EASE, staggerContainer, fadeUp, usePrefersReducedMotion, useParallax, hoverProps, tapProps } from './animation'
 
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start start', 'end start'],
-  })
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '18%'])
-  const overlay = useTransform(scrollYProgress, [0, 1], [0.55, 0.85])
-
-  const prefersReduced = usePrefersReducedMotion()
-
-  const containerVariants = {
-    initial: {},
-    enter: (delay = 0) => ({
-      transition: {
-        staggerChildren: 0.06,
-        delayChildren: delay,
-      },
-    }),
-  }
+  const reduced = usePrefersReducedMotion()
+  const parallaxRef = useRef<HTMLDivElement>(null)
+  const { y } = useParallax(parallaxRef, [0, 12])
 
   return (
     <section
@@ -33,7 +18,8 @@ export function Hero() {
       id="top"
       className="relative flex h-svh min-h-[640px] w-full items-center justify-center overflow-hidden"
     >
-      <motion.div style={{ y }} className="absolute inset-0">
+      {/* Parallax image layer (transform-only) */}
+      <motion.div style={{ y }} className="absolute inset-0" ref={parallaxRef} aria-hidden>
         <Image
           src={IMAGES.snakeCoupleArch || '/placeholder.svg'}
           alt="TONNANO campaign — model wearing the black Snake collection tee"
@@ -44,65 +30,65 @@ export function Hero() {
         />
       </motion.div>
 
-      <motion.div
-        className="absolute inset-0 bg-background"
-        style={{ opacity: overlay }}
-        aria-hidden
-      />
+      {/* Subtle overlay depth */}
+      <motion.div className="absolute inset-0 bg-background" style={{ opacity: 0.6 }} aria-hidden />
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-background/40" />
 
+      {/* Content with staggered entrance */}
       <motion.div
         className="relative z-10 flex flex-col items-center px-6 text-center"
         initial="initial"
         animate="enter"
-        variants={containerVariants}
+        variants={staggerContainer(0.04)}
         transition={{ ease: EASE as any }}
       >
         <motion.span
           className="font-sans text-[0.65rem] tracking-luxury text-foreground/70 sm:text-xs"
-          variants={fadeUpVariant(16)}
-          transition={{ duration: 0.9, ease: EASE as any, delay: 0.2 }}
+          variants={fadeUp(12)}
+          transition={{ duration: 0.56, ease: EASE as any, delay: 0.12 }}
         >
           EST. 2026 — MADE IN MOROCCO
         </motion.span>
 
         <motion.h1
           className="mt-5 font-sans text-5xl font-semibold tracking-luxury text-primary sm:text-7xl lg:text-8xl"
-          variants={fadeUpVariant(22)}
-          transition={{ duration: 1.05, ease: EASE as any, delay: 0.35 }}
+          variants={fadeUp(20)}
+          transition={{ duration: 0.64, ease: EASE as any, delay: 0.22 }}
         >
           TONNANO
         </motion.h1>
 
         <motion.p
           className="mt-6 font-serif text-2xl italic text-foreground sm:text-3xl lg:text-4xl"
-          variants={fadeUpVariant(22)}
-          transition={{ duration: 1.05, ease: EASE as any, delay: 0.55 }}
+          variants={fadeUp(18)}
+          transition={{ duration: 0.6, ease: EASE as any, delay: 0.34 }}
         >
           Welcome To The Inner Code
         </motion.p>
 
         <motion.p
           className="mt-5 max-w-md font-sans text-sm leading-relaxed text-foreground/65 sm:text-base"
-          variants={fadeUpVariant(22)}
-          transition={{ duration: 1.05, ease: EASE as any, delay: 0.75 }}
+          variants={fadeUp(16)}
+          transition={{ duration: 0.56, ease: EASE as any, delay: 0.46 }}
         >
           The first chapter begins before the first drop.
         </motion.p>
 
         <motion.a
           href="#whitelist"
-          className="mt-10 inline-block border border-primary bg-primary px-10 py-4 font-sans text-[0.7rem] tracking-wide-lux text-primary-foreground transition-all duration-300 hover:bg-transparent hover:scale-[1.01] focus-visible:ring-2 focus-visible:ring-primary/20 will-change-transform"
-          variants={fadeUpVariant(22)}
-          transition={{ duration: 1.05, ease: EASE as any, delay: 0.95 }}
+          className="mt-10 inline-block border border-primary bg-primary px-10 py-4 font-sans text-[0.7rem] tracking-wide-lux text-primary-foreground transition-all duration-300 hover:bg-transparent focus-visible:ring-2 focus-visible:ring-primary/20 will-change-transform"
+          variants={fadeUp(14)}
+          transition={{ duration: 0.56, ease: EASE as any, delay: 0.58 }}
+          {...(!reduced ? hoverProps({ scale: 1.01 }) : {})}
+          {...(!reduced ? tapProps() : {})}
         >
           JOIN THE WHITELIST
         </motion.a>
       </motion.div>
 
+      {/* Subtle scroll indicator — reduced-motion aware */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-        {/* Subtle scroll indicator — respects reduced motion */}
-        {!prefersReduced ? (
+        {!reduced ? (
           <div className="flex flex-col items-center gap-3">
             <span className="font-sans text-[0.6rem] tracking-luxury text-foreground/50">SCROLL</span>
             <div className="h-12 w-px bg-foreground/30 animate-pulse-slow" />
@@ -121,10 +107,7 @@ export function Hero() {
           50% { transform: scaleY(1); }
           100% { transform: scaleY(0.3); }
         }
-        .animate-pulse-slow {
-          animation: pulse-slow 2.4s ease-in-out infinite;
-          transform-origin: top;
-        }
+        .animate-pulse-slow { animation: pulse-slow 2.4s ease-in-out infinite; transform-origin: top; }
       `}</style>
     </section>
   )
