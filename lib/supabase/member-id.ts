@@ -9,7 +9,12 @@
  * @param sequenceNumber - The integer from member_id_seq (510, 511, 512...)
  * @returns Formatted Member ID (e.g., TN-000510)
  */
-export function formatMemberId(sequenceNumber: number): string {
+export function formatMemberId(sequenceNumber?: number | null): string {
+  if (typeof sequenceNumber !== 'number' || Number.isNaN(sequenceNumber)) {
+    // Guard: if sequence is missing for any reason, return a neutral placeholder
+    // This avoids runtime crashes while keeping the DB sequence as the single source of truth.
+    return 'TN-000000'
+  }
   const paddedNumber = String(sequenceNumber).padStart(6, '0')
   return `TN-${paddedNumber}`
 }
