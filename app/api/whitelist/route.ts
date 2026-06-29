@@ -1,5 +1,5 @@
 import { validateEmail, validatePhoneNumber, validateRequired } from '@/lib/validators'
-import { generateMemberId } from '@/lib/supabase/member-id'
+import { formatMemberId } from '@/lib/supabase/member-id'
 import { supabase } from '@/lib/supabase/client'
 import { WhitelistFormInput, WhitelistResponse } from '@/lib/supabase/types'
 import { NextRequest, NextResponse } from 'next/server'
@@ -8,12 +8,15 @@ export const runtime = 'nodejs'
 
 /**
  * POST /api/whitelist
- * 
+ *
  * Handles whitelist form submissions with:
- * - Client-side and server-side validation
+ * - Server-side validation
  * - Duplicate email prevention
+ * - PostgreSQL sequence-based Member ID (atomic, race-condition safe)
  * - Supabase integration
- * - Member ID generation
+ *
+ * The database generates member_id_seq via nextval('member_id_seq')
+ * This ensures uniqueness without application-level counting or race conditions.
  */
 export async function POST(request: NextRequest): Promise<NextResponse<WhitelistResponse>> {
   try {
@@ -77,7 +80,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<Whitelist
       )
     }
 
-    // === DUPLICATE CHECK ===
+    // === DUPLICATE EMAIL CHECK ===
 
     const { data: existingUser, error: queryError } = await supabase
       .from('whitelist_members')
@@ -103,24 +106,10 @@ export async function POST(request: NextRequest): Promise<NextResponse<Whitelist
       )
     }
 
-    // === GET MEMBER COUNT FOR SEQUENCE NUMBER ===
-
-    const { count, error: countError } = await supabase
-      .from('whitelist_members')
-      .select('*', { count: 'exact', head: true })
-
-    if (countError) {
-      console.error('[Whitelist API] Failed to get member count:', countError)
-      return NextResponse.json(
-        { success: false, error: 'An error occurred. Please try again.' },
-        { status: 500 }
-      )
-    }
-
-    const sequenceNumber = (count || 0) + 1
-    const memberId = generateMemberId(sequenceNumber)
-
-    // === INSERT INTO DATABASE ===
+    // === INSERT WITH DATABASE-GENERATED MEMBER ID ===
+    // The member_id_seq column uses DEFAULT nextval('member_id_seq')
+    // This is atomic at the database level and prevents race conditions
+    // even with thousands of concurrent requests
 
     const { data, error: insertError } = await supabase
       .from('whitelist_members')
@@ -133,7 +122,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<Whitelist
           phone_number: body.phone.trim(),
           email: body.email.toLowerCase().trim(),
           instagram_username: body.instagram?.trim() || null,
-          member_id: memberId,
+          // member_id_seq is NOT set here - database uses DEFAULT nextval('member_id_seq')
           created_at: new Date().toISOString(),
         },
       ])
@@ -148,13 +137,17 @@ export async function POST(request: NextRequest): Promise<NextResponse<Whitelist
       )
     }
 
+    // Format the raw sequence number into TN-XXXXXX format for display
+    const formattedMemberId = formatMemberId(data.member_id_seq)
+
     return NextResponse.json(
       {
         success: true,
         message: 'Welcome to TONNANO Inner Code!',
         data: {
           id: data.id,
-          member_id: data.member_id,
+          member_id_seq: data.member_id_seq,
+          member_id: formattedMemberId,
         },
       },
       { status: 201 }

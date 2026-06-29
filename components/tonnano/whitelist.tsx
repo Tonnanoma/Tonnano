@@ -1,9 +1,10 @@
 'use client'
 
 import { cn } from '@/lib/utils'
+import { WhitelistFormInput, WhitelistResponse } from '@/lib/supabase/types'
 import { Check } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
-import { type FormEvent, useState } from 'react'
+import { type FormEvent, useRef, useState } from 'react'
 import { Reveal } from './reveal'
 
 const FIELDS = [
@@ -23,18 +24,69 @@ const FIELDS = [
 ] as const
 
 export function Whitelist() {
+  const formRef = useRef<HTMLFormElement>(null)
   const [agreed, setAgreed] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [memberId, setMemberId] = useState<string | null>(null)
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
     if (!agreed) {
       setError('Please agree to receive updates from TONNANO.')
       return
     }
+
+    if (!formRef.current) return
+
     setError('')
-    setSubmitted(true)
+    setIsLoading(true)
+
+    try {
+      // Collect form data
+      const formData = new FormData(formRef.current)
+      const data: WhitelistFormInput = {
+        firstName: formData.get('firstName') as string,
+        lastName: formData.get('lastName') as string,
+        country: formData.get('country') as string,
+        city: formData.get('city') as string,
+        phone: formData.get('phone') as string,
+        email: formData.get('email') as string,
+        instagram: (formData.get('instagram') as string) || undefined,
+      }
+
+      // Submit to API endpoint
+      const response = await fetch('/api/whitelist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      const result: WhitelistResponse = await response.json()
+
+      if (!response.ok) {
+        setError(result.error || 'An error occurred. Please try again.')
+        setIsLoading(false)
+        return
+      }
+
+      // Only show success if database insert was successful
+      if (result.data?.member_id) {
+        setMemberId(result.data.member_id)
+        setSubmitted(true)
+      } else {
+        setError('An error occurred. Please try again.')
+      }
+      setIsLoading(false)
+    } catch (err) {
+      console.error('Form submission error:', err)
+      setError('An error occurred. Please try again.')
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -68,7 +120,7 @@ export function Whitelist() {
                       MEMBER ID
                     </p>
                     <p className="mt-2 font-sans text-2xl tracking-luxury text-primary">
-                      #000427
+                      {memberId || 'TN-000000'}
                     </p>
                   </div>
                 </motion.div>
@@ -88,6 +140,7 @@ export function Whitelist() {
                   </div>
 
                   <form
+                    ref={formRef}
                     onSubmit={handleSubmit}
                     className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2"
                     noValidate
@@ -112,7 +165,8 @@ export function Whitelist() {
                           type={f.type}
                           required={f.required}
                           autoComplete="off"
-                          className="border-0 border-b border-border bg-transparent pb-2 font-sans text-sm text-foreground outline-none transition-colors placeholder:text-foreground/30 focus:border-primary"
+                          disabled={isLoading}
+                          className="border-0 border-b border-border bg-transparent pb-2 font-sans text-sm text-foreground outline-none transition-colors placeholder:text-foreground/30 focus:border-primary disabled:opacity-50"
                         />
                       </div>
                     ))}
@@ -123,11 +177,13 @@ export function Whitelist() {
                         role="checkbox"
                         aria-checked={agreed}
                         onClick={() => setAgreed((v) => !v)}
+                        disabled={isLoading}
                         className={cn(
                           'mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center border transition-colors',
                           agreed
                             ? 'border-primary bg-primary text-primary-foreground'
                             : 'border-border bg-transparent',
+                          isLoading && 'opacity-50 cursor-not-allowed',
                         )}
                       >
                         {agreed && <Check className="h-3 w-3" strokeWidth={2.5} />}
@@ -145,9 +201,10 @@ export function Whitelist() {
 
                     <button
                       type="submit"
-                      className="col-span-1 mt-3 border border-primary bg-primary py-4 font-sans text-[0.7rem] tracking-wide-lux text-primary-foreground transition-all duration-300 hover:bg-transparent hover:text-primary sm:col-span-2"
+                      disabled={isLoading}
+                      className="col-span-1 mt-3 border border-primary bg-primary py-4 font-sans text-[0.7rem] tracking-wide-lux text-primary-foreground transition-all duration-300 hover:bg-transparent hover:text-primary disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      JOIN THE INNER CODE
+                      {isLoading ? 'JOINING...' : 'JOIN THE INNER CODE'}
                     </button>
                   </form>
                 </motion.div>

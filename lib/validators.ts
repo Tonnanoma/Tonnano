@@ -1,5 +1,5 @@
 /**
- * Validates an email address
+ * Validates an email address using a simple RFC-based pattern
  */
 export function validateEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -7,8 +7,9 @@ export function validateEmail(email: string): boolean {
 }
 
 /**
- * Validates a phone number (basic international format)
- * Accepts digits, +, -, spaces, parentheses
+ * Validates a phone number (international format)
+ * Accepts: digits, +, -, spaces, parentheses
+ * Requires minimum 7 digits
  */
 export function validatePhoneNumber(phone: string): boolean {
   const phoneRegex = /^[\d\s\-+()]+$/
@@ -16,7 +17,7 @@ export function validatePhoneNumber(phone: string): boolean {
 }
 
 /**
- * Validates that a string is not empty and is at least 2 characters
+ * Validates that a string is not empty and at least 2 characters
  */
 export function validateName(name: string): boolean {
   return name.trim().length >= 2
