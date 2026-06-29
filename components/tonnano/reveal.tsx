@@ -2,12 +2,12 @@
 
 import { motion } from 'motion/react'
 import type { ReactNode } from 'react'
-import { EASE, fadeUpVariant, usePrefersReducedMotion } from './animation'
+import { fadeUp, EASE, usePrefersReducedMotion } from './animation'
 
 export function Reveal({
   children,
   delay = 0,
-  y = 28,
+  y = 20,
   className,
   once = true,
 }: {
@@ -23,7 +23,7 @@ export function Reveal({
     return <div className={className}>{children}</div>
   }
 
-  const variants = fadeUpVariant(y)
+  const variants = fadeUp(y)
 
   return (
     <motion.div
@@ -32,7 +32,7 @@ export function Reveal({
       initial="initial"
       whileInView="enter"
       viewport={{ once, margin: '-80px' }}
-      transition={{ duration: 0.9, ease: EASE as any, delay }}
+      transition={{ duration: 0.56, ease: EASE as any, delay }}
     >
       {children}
     </motion.div>
