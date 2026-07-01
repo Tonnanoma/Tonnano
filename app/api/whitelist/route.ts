@@ -144,6 +144,8 @@ export async function POST(request: NextRequest) {
           id: data.id,
           email: data.email,
           created_at: data.created_at,
+          member_id: `TN-${String(data.member_id_seq).padStart(6, '0')}`,
+          member_id_seq: data.member_id_seq,
         },
       },
       {
