@@ -5,6 +5,7 @@ import { motion } from 'motion/react'
 import Image from 'next/image'
 import { useRef } from 'react'
 import { EASE, staggerContainer, fadeUp, usePrefersReducedMotion, useParallax, hoverProps, tapProps } from './animation'
+import { WhitelistCtaButton } from './whitelist-cta-button'
 
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null)
@@ -74,16 +75,18 @@ export function Hero() {
           The first chapter begins before the first drop.
         </motion.p>
 
-        <motion.a
-          href="#whitelist"
-          className="mt-10 inline-block border border-primary bg-primary px-10 py-4 font-sans text-[0.7rem] tracking-wide-lux text-primary-foreground transition-all duration-300 hover:bg-transparent focus-visible:ring-2 focus-visible:ring-primary/20 will-change-transform"
+        <motion.div
+          className="mt-10 will-change-transform"
           variants={fadeUp(14)}
           transition={{ duration: 0.56, ease: EASE as any, delay: 0.58 }}
           {...(!reduced ? hoverProps({ scale: 1.01 }) : {})}
           {...(!reduced ? tapProps() : {})}
         >
-          JOIN THE WHITELIST
-        </motion.a>
+          <WhitelistCtaButton
+            variant="solid"
+            className="inline-block px-10 text-center hover:bg-transparent hover:text-primary focus-visible:ring-2 focus-visible:ring-primary/20"
+          />
+        </motion.div>
       </motion.div>
 
       {/* Subtle scroll indicator — reduced-motion aware */}

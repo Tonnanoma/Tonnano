@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useState } from 'react'
 import { NAV_LINKS } from '@/lib/site'
 import { EASE, usePrefersReducedMotion } from './animation'
+import { WhitelistCtaButton } from './whitelist-cta-button'
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -55,12 +56,7 @@ export function Navbar() {
           ))}
         </ul>
 
-        <a
-          href="#whitelist"
-          className="hidden border border-primary/60 px-5 py-2.5 font-sans text-[0.65rem] tracking-wide-lux text-primary transition-colors hover:bg-primary hover:text-primary-foreground md:inline-block"
-        >
-          JOIN THE WHITELIST
-        </a>
+        <WhitelistCtaButton className="hidden md:inline-block" />
 
         <button
           type="button"
@@ -102,13 +98,11 @@ export function Navbar() {
               ))}
             </ul>
             <div className="px-8 pb-12">
-              <a
-                href="#whitelist"
-                onClick={() => setOpen(false)}
-                className="block border border-primary bg-primary py-4 text-center font-sans text-xs tracking-wide-lux text-primary-foreground"
-              >
-                JOIN THE WHITELIST
-              </a>
+              <WhitelistCtaButton
+                variant="solid"
+                className="block w-full"
+                onNavigate={() => setOpen(false)}
+              />
             </div>
           </motion.div>
         )}
