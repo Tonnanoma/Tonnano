@@ -94,16 +94,28 @@ export function Intro({ onDone }: { onDone: () => void }) {
                 the classic luxury-house reveal, no logo mark needed. */}
             <div className="flex items-baseline justify-center gap-3">
               <motion.span
-                className="font-sans text-5xl font-semibold text-foreground sm:text-7xl"
+                className="font-sans text-5xl font-semibold sm:text-7xl"
                 style={{ clipPath: 'inset(0% 0% 100% 0%)' }}
-                initial={{ letterSpacing: '0.55em', opacity: 0, scale: 1.05 }}
+                initial={{ letterSpacing: '0.55em', opacity: 0, scale: 1.05, color: '#ffffff' }}
                 animate={{
                   letterSpacing: '0.02em',
                   opacity: 1,
                   scale: 1,
                   clipPath: 'inset(0% 0% 0% 0%)',
+                  color: ['#ffffff', '#ffffff', '#f36b21', '#f36b21', '#b3121b', '#b3121b'],
                 }}
-                transition={{ duration: 1.05, ease: EASE, delay: 2.25 }}
+                transition={{
+                  letterSpacing: { duration: 1.05, ease: EASE, delay: 2.25 },
+                  opacity: { duration: 1.05, ease: EASE, delay: 2.25 },
+                  scale: { duration: 1.05, ease: EASE, delay: 2.25 },
+                  clipPath: { duration: 1.05, ease: EASE, delay: 2.25 },
+                  color: {
+                    duration: 6.5,
+                    times: [0, 0.15, 0.35, 0.55, 0.78, 1],
+                    ease: 'easeInOut',
+                    delay: 2.25,
+                  },
+                }}
               >
                 TONNANO
               </motion.span>
