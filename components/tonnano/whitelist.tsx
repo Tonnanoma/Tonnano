@@ -158,7 +158,18 @@ export function Whitelist() {
                   <SuccessEmbers />
 
                   {/* Drawn seal — the ring traces itself, then the check strokes in */}
-                  <motion.span className="relative flex h-16 w-16 items-center justify-center">
+                  <motion.span
+                    className="relative flex h-16 w-16 items-center justify-center"
+                    initial={{ scale: 0.6 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: 'spring', stiffness: 260, damping: 16, delay: 0.05 }}
+                  >
+                    <motion.span
+                      className="absolute inset-0 rounded-full border border-primary/50"
+                      initial={{ opacity: 0, scale: 1 }}
+                      animate={{ opacity: [0, 0.5, 0], scale: [1, 1.7, 2.1] }}
+                      transition={{ duration: 1.8, ease: 'easeOut', delay: 1.1, repeat: Infinity, repeatDelay: 1.4 }}
+                    />
                     <svg
                       viewBox="0 0 64 64"
                       className="absolute inset-0 h-full w-full -rotate-90"
@@ -185,7 +196,6 @@ export function Whitelist() {
                         strokeWidth="1.6"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        pathLength={1}
                         initial={{ pathLength: 0, opacity: 0 }}
                         animate={{ pathLength: 1, opacity: 1 }}
                         transition={{ duration: 0.5, ease: EASE as any, delay: 0.75 }}
