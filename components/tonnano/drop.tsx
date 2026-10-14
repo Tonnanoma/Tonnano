@@ -3,19 +3,14 @@
 import { IMAGES } from '@/lib/site'
 import { motion, useScroll, useTransform } from 'motion/react'
 import Image from 'next/image'
-import { useRef } from 'react'
 import { Reveal } from './reveal'
 
 export function Drop() {
-  const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  })
+  const { scrollYProgress } = useScroll()
   const scale = useTransform(scrollYProgress, [0, 1], [1.12, 1])
 
   return (
-    <section id="drop" ref={ref} className="relative overflow-hidden">
+    <section id="drop" className="relative overflow-hidden">
       <div className="absolute inset-0">
         <motion.div style={{ scale }} className="absolute inset-0">
           <Image

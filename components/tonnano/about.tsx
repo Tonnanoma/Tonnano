@@ -3,15 +3,10 @@
 import { IMAGES } from '@/lib/site'
 import { motion, useScroll, useTransform } from 'motion/react'
 import Image from 'next/image'
-import { useRef } from 'react'
 import { Reveal } from './reveal'
 
 export function About() {
-  const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  })
+  const { scrollYProgress } = useScroll()
   const y = useTransform(scrollYProgress, [0, 1], ['-8%', '8%'])
 
   return (

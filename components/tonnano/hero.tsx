@@ -3,22 +3,15 @@
 import { IMAGES } from '@/lib/site'
 import { motion, useScroll, useTransform } from 'motion/react'
 import Image from 'next/image'
-import { useRef } from 'react'
-
 const EASE = [0.22, 1, 0.36, 1] as const
 
 export function Hero() {
-  const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start start', 'end start'],
-  })
+  const { scrollYProgress } = useScroll()
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '18%'])
   const overlay = useTransform(scrollYProgress, [0, 1], [0.55, 0.85])
 
   return (
     <section
-      ref={ref}
       id="top"
       className="relative flex h-svh min-h-[640px] w-full items-center justify-center overflow-hidden"
     >
