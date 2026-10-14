@@ -1,5 +1,6 @@
 'use client'
 
+import { IMAGES } from '@/lib/site'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useMemo, useState } from 'react'
 
@@ -59,6 +60,16 @@ export function Intro({ onDone }: { onDone: () => void }) {
           exit={{ opacity: 0 }}
           transition={{ duration: 1.1, ease: EASE }}
         >
+          <video
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-20 mix-blend-screen"
+            src={IMAGES.winterPortrait}
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-hidden="true"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-black/55" />
           {/* Warm cinematic spotlight */}
           <motion.div
             className="pointer-events-none absolute left-1/2 top-1/2 h-[120vmax] w-[120vmax] -translate-x-1/2 -translate-y-1/2"

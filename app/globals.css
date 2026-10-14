@@ -36,6 +36,26 @@
   --radius-2xl: calc(var(--radius) * 1.8);
 }
 
+html {
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #0a0a0a;
+  --card-foreground: #ffffff;
+  --popover: #111111;
+  --popover-foreground: #ffffff;
+  --primary: #f36b21;
+  --primary-foreground: #000000;
+  --secondary: #111111;
+  --secondary-foreground: #ffffff;
+  --muted: #161616;
+  --muted-foreground: #8a8a8a;
+  --accent: #f36b21;
+  --accent-foreground: #000000;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #f36b21;
+}
+
 :root {
   color-scheme: dark;
   --background: #000000;

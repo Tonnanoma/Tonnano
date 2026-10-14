@@ -9,6 +9,7 @@ import { InnerCode } from '@/components/tonnano/inner-code'
 import { Instagram } from '@/components/tonnano/instagram'
 import { Navbar } from '@/components/tonnano/navbar'
 import { Whitelist } from '@/components/tonnano/whitelist'
+import { WinterCode } from '@/components/tonnano/winter-code'
 
 export default function Page() {
   return (
@@ -18,6 +19,7 @@ export default function Page() {
         <Hero />
         <About />
         <Drop />
+        <WinterCode />
         <InnerCode />
         <Collection />
         <Countdown />

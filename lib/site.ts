@@ -38,6 +38,20 @@ export const IMAGES = {
     'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260624-WA0057-O6DQmxZgSUePUhBuMkN7TwBymBbI7Y.jpg',
   snakeFlat:
     'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260625-WA0016%281%29-NKqp1NbmhRPVz6Snwsv9Cm1yQJgWm8.jpg',
+  winterPortrait:
+    'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Video%202026-10-14%20at%2001.51.58-InlZ4ReR0LupPgoZpq8H9b9ea4dl7T.mp4',
+  winterJacket:
+    'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-09-27%20at%2019.03.04%20%285%29-6cSqZXWTZNuosTr1lNgSXBGu70jFYo.jpeg',
+  winterLining:
+    'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-09-27%20at%2019.03.03-R2j8NUCsRBqT8QTmD0dMNMJWjFbyJB.jpeg',
+  winterPortraitAlt:
+    'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-09-27%20at%2019.03.04%20%284%29-3l8Ye3tpkEHmnP3Q9ow30nEWi1IAYs.jpeg',
+  winterDogs:
+    'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-09-27%20at%2019.03.04%20%282%29-y6PdfuakqjwgdRdO6YdaRcFu3jEGKu.jpeg',
+  winterThrone:
+    'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-09-27%20at%2019.03.04%20%283%29-0SH5b8LgFtvL7pRWYwzCy7sTxWlKfq.jpeg',
+  winterBox:
+    'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-09-27%20at%2019.03.04%20%281%29-axAU6LEwhafynm5JCIk2zleIcw6s8O.jpeg',
 } as const
 
 export const INSTAGRAM_URL = 'https://www.instagram.com/tonnanoma/'
@@ -48,6 +62,7 @@ export const DROP_DATE = '2026-08-01T12:00:00Z'
 export const NAV_LINKS = [
   { label: 'About', href: '#about' },
   { label: 'Drop 01', href: '#drop' },
+  { label: 'Winter Code', href: '#winter-code' },
   { label: 'Inner Code', href: '#inner-code' },
   { label: 'Collection', href: '#collection' },
   { label: 'Whitelist', href: '#whitelist' },
