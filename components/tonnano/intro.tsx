@@ -84,6 +84,8 @@ export function Intro({ onDone }: { onDone: () => void }) {
 
           <Particles />
 
+          <button type="button" onClick={() => setVisible(false)} className="absolute right-5 top-5 z-20 border border-white/20 px-3 py-2 font-sans text-[0.6rem] tracking-wide-lux text-white/60 transition-colors hover:border-primary hover:text-primary">SKIP INTRO</button>
+
           <div className="relative flex flex-col items-center px-6 text-center">
             <motion.div
               className="light-sweep"

@@ -3,6 +3,8 @@
 import { motion } from 'motion/react'
 import { type ReactNode, useEffect, useState } from 'react'
 import { Intro } from './intro'
+import { LanguageProvider } from './language'
+import Lenis from 'lenis'
 
 export function Experience({ children }: { children: ReactNode }) {
   const [introActive, setIntroActive] = useState(true)
@@ -19,6 +21,14 @@ export function Experience({ children }: { children: ReactNode }) {
   }, [])
 
   useEffect(() => {
+    const lenis = new Lenis({ duration: 1.1, smoothWheel: true })
+    let frame = 0
+    const raf = (time: number) => { lenis.raf(time); frame = requestAnimationFrame(raf) }
+    frame = requestAnimationFrame(raf)
+    return () => { cancelAnimationFrame(frame); lenis.destroy() }
+  }, [])
+
+  useEffect(() => {
     document.body.style.overflow = introActive ? 'hidden' : ''
     return () => {
       document.body.style.overflow = ''
@@ -30,7 +40,7 @@ export function Experience({ children }: { children: ReactNode }) {
   }
 
   return (
-    <>
+    <LanguageProvider>
       {ready && introActive && (
         <Intro
           onDone={() => {
@@ -46,6 +56,6 @@ export function Experience({ children }: { children: ReactNode }) {
       >
         {children}
       </motion.div>
-    </>
+    </LanguageProvider>
   )
 }

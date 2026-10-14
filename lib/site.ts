@@ -63,6 +63,7 @@ export const NAV_LINKS = [
   { label: 'About', href: '#about' },
   { label: 'Drop 01', href: '#drop' },
   { label: 'Winter Code', href: '#winter-code' },
+  { label: '3D Experience', href: '#3d-experience' },
   { label: 'Inner Code', href: '#inner-code' },
   { label: 'Collection', href: '#collection' },
   { label: 'Whitelist', href: '#whitelist' },

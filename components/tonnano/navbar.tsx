@@ -5,6 +5,7 @@ import { Menu, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useState } from 'react'
 import { NAV_LINKS } from '@/lib/site'
+import { LanguageSwitcher } from './language'
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -55,12 +56,15 @@ export function Navbar() {
           ))}
         </ul>
 
-        <a
-          href="#whitelist"
-          className="hidden border border-primary/60 px-5 py-2.5 font-sans text-[0.65rem] tracking-wide-lux text-primary transition-colors hover:bg-primary hover:text-primary-foreground md:inline-block"
-        >
-          JOIN THE WHITELIST
-        </a>
+        <div className="hidden items-center gap-5 md:flex">
+          <LanguageSwitcher />
+          <a
+            href="#whitelist"
+            className="border border-primary/60 px-5 py-2.5 font-sans text-[0.65rem] tracking-wide-lux text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+          >
+            JOIN THE WHITELIST
+          </a>
+        </div>
 
         <button
           type="button"
@@ -111,6 +115,10 @@ export function Navbar() {
                 </motion.li>
               ))}
             </ul>
+            <div className="flex items-center justify-between px-8 pb-6">
+              <span className="font-sans text-[0.6rem] tracking-wide-lux text-foreground/50">LANGUAGE</span>
+              <LanguageSwitcher />
+            </div>
             <div className="px-8 pb-12">
               <a
                 href="#whitelist"
