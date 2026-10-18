@@ -40,11 +40,6 @@ export function Drop() {
             Drop 01
           </h2>
         </Reveal>
-        <Reveal delay={0.15}>
-          <p className="mt-3 font-sans text-sm tracking-luxury text-foreground/70">
-            AUGUST 2026
-          </p>
-        </Reveal>
         <Reveal delay={0.2}>
           <p className="mx-auto mt-10 max-w-xl font-sans text-sm leading-relaxed text-foreground/70 sm:text-base">
             The first chapter of TONNANO begins with a carefully curated

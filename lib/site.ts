@@ -51,5 +51,6 @@ export const NAV_LINKS = [
   { label: 'Drop 01', href: '#drop' },
   { label: 'Inner Code', href: '#inner-code' },
   { label: 'Collection', href: '#collection' },
+  { label: 'Bilzerian', href: '#bilzerian' },
   { label: 'Whitelist', href: '#whitelist' },
 ] as const
