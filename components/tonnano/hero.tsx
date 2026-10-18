@@ -4,7 +4,7 @@ import { IMAGES } from '@/lib/site'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import { useRef } from 'react'
-import { EASE, staggerContainer, fadeUp, usePrefersReducedMotion, useParallax, hoverProps, tapProps } from './animation'
+import { EASE, staggerContainer, fadeUp, usePrefersReducedMotion, useParallax, tapProps } from './animation'
 import { WhitelistCtaButton } from './whitelist-cta-button'
 
 export function Hero() {
@@ -79,8 +79,8 @@ export function Hero() {
           className="mt-10 will-change-transform"
           variants={fadeUp(14)}
           transition={{ duration: 0.56, ease: EASE as any, delay: 0.58 }}
-          {...(!reduced ? hoverProps({ scale: 1.01 }) : {})}
-          {...(!reduced ? tapProps() : {})}
+          {...(!reduced ? { whileHover: { scale: 1.01 }, style: { willChange: 'transform' } } : {})}
+          {...(!reduced ? { whileTap: { scale: 0.995 } } : {})}
         >
           <WhitelistCtaButton
             variant="solid"
