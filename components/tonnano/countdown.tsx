@@ -1,66 +1,36 @@
 'use client'
 
-import { DROP_DATE } from '@/lib/site'
 import { useEffect, useState } from 'react'
 import { Reveal } from './reveal'
+import { WhitelistCtaButton } from './whitelist-cta-button'
 
-function getRemaining(target: number) {
-  const diff = Math.max(0, target - Date.now())
-  return {
-    days: Math.floor(diff / 86400000),
-    hours: Math.floor((diff / 3600000) % 24),
-    minutes: Math.floor((diff / 60000) % 60),
-    seconds: Math.floor((diff / 1000) % 60),
-  }
-}
+const SIGNALS = ['TOMORROW', '12:10:00', 'NEXT MONTH', '12/11/2026', 'SOON', 'NOW', 'DEMAIN', 'DROP 01', 'INNER CODE ACCESS', 'WHITELIST ONLY']
 
 export function Countdown() {
-  const target = new Date(DROP_DATE).getTime()
-  const [time, setTime] = useState<ReturnType<typeof getRemaining> | null>(null)
+  const [index, setIndex] = useState(0)
 
   useEffect(() => {
-    setTime(getRemaining(target))
-    const id = setInterval(() => setTime(getRemaining(target)), 1000)
-    return () => clearInterval(id)
-  }, [target])
-
-  const units: [string, number | undefined][] = [
-    ['Days', time?.days],
-    ['Hours', time?.hours],
-    ['Minutes', time?.minutes],
-    ['Seconds', time?.seconds],
-  ]
+    const id = window.setInterval(() => setIndex((value) => (value + 1) % SIGNALS.length), 4200)
+    return () => window.clearInterval(id)
+  }, [])
 
   return (
-    <section className="relative border-y border-border bg-secondary/40 py-24 sm:py-32">
-      <div className="mx-auto max-w-4xl px-5 text-center sm:px-8">
+    <section className="relative overflow-hidden border-y border-border bg-[#0b0b0b] py-28 sm:py-40">
+      <div className="grain absolute inset-0 opacity-20" aria-hidden="true" />
+      <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
         <Reveal>
-          <span className="font-sans text-[0.65rem] tracking-luxury text-primary">
-            DROP 01 — AUGUST 2026
-          </span>
-          <h2 className="mt-6 font-serif text-4xl text-foreground sm:text-5xl">
-            The Countdown Has Begun
-          </h2>
+          <span className="font-sans text-[0.62rem] tracking-[0.35em] text-primary">THE NEXT CHAPTER</span>
+          <h2 className="mt-6 font-serif text-4xl font-light text-foreground sm:text-6xl">THE FIRST DROP APPROACHES</h2>
+          <p className="mx-auto mt-5 max-w-md font-sans text-sm text-muted-foreground">No date. No announcement. Only access.</p>
         </Reveal>
-
         <Reveal delay={0.12}>
-          <div className="mx-auto mt-14 grid max-w-2xl grid-cols-4 gap-3 sm:gap-6">
-            {units.map(([label, value]) => (
-              <div
-                key={label}
-                className="flex flex-col items-center border border-border bg-background py-6 sm:py-9"
-              >
-                <span className="font-sans text-3xl font-light tabular-nums text-foreground sm:text-6xl">
-                  {value === undefined
-                    ? '--'
-                    : String(value).padStart(2, '0')}
-                </span>
-                <span className="mt-3 font-sans text-[0.55rem] tracking-wide-lux text-foreground/50 sm:text-[0.65rem]">
-                  {label.toUpperCase()}
-                </span>
-              </div>
-            ))}
+          <div className="relative mx-auto mt-16 flex min-h-28 items-center justify-center border-y border-border py-8 sm:min-h-40">
+            <div key={SIGNALS[index]} className="chapter-signal font-serif text-4xl font-light tracking-[0.12em] text-foreground sm:text-7xl">
+              {SIGNALS[index]}
+            </div>
           </div>
+          <p className="mt-6 font-sans text-[0.6rem] tracking-[0.28em] text-muted-foreground">DROP 01 — WHITELIST ONLY</p>
+          <div className="mt-9"><WhitelistCtaButton variant="solid" /></div>
         </Reveal>
       </div>
     </section>

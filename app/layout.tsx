@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: '%s · TONNANO',
   },
   description:
-    'TONNANO. Luxury streetwear crafted in Morocco. Limited production, timeless design. Join the Inner Code ahead of Drop 01, August 2026.',
+    'Premium Moroccan streetwear. Limited drops. Inner Code access. Made in Morocco.',
   keywords: [
     'TONNANO',
     'luxury streetwear',
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'TONNANO — Time Builds Legends',
     description:
-      'Luxury streetwear crafted in Morocco. Limited production, timeless design. Join the Inner Code.',
+      'Premium Moroccan streetwear. Limited drops. Inner Code access. Made in Morocco.',
     url: 'https://tonnano.com',
     siteName: 'TONNANO',
     type: 'website',

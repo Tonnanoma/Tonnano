@@ -56,15 +56,15 @@ export function Hero() {
           variants={fadeUp(20)}
           transition={{ duration: 0.64, ease: EASE as any, delay: 0.22 }}
         >
-          TONNANO
+          TIME BUILDS LEGENDS
         </motion.h1>
 
         <motion.p
-          className="mt-6 font-serif text-2xl italic text-foreground sm:text-3xl lg:text-4xl"
+          className="mt-6 max-w-2xl font-serif text-2xl italic text-foreground sm:text-3xl lg:text-4xl"
           variants={fadeUp(18)}
           transition={{ duration: 0.6, ease: EASE as any, delay: 0.34 }}
         >
-          Welcome To The Inner Code
+          TONNANO is not a clothing brand. It is a code, a discipline and a standard.
         </motion.p>
 
         <motion.p
