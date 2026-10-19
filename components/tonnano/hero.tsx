@@ -4,7 +4,7 @@ import { IMAGES } from '@/lib/site'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import { useRef } from 'react'
-import { EASE, staggerContainer, fadeUp, usePrefersReducedMotion, useParallax, hoverProps, tapProps } from './animation'
+import { EASE, staggerContainer, fadeUp, usePrefersReducedMotion, useParallax, tapProps } from './animation'
 import { WhitelistCtaButton } from './whitelist-cta-button'
 
 export function Hero() {
@@ -56,15 +56,15 @@ export function Hero() {
           variants={fadeUp(20)}
           transition={{ duration: 0.64, ease: EASE as any, delay: 0.22 }}
         >
-          TONNANO
+          TIME BUILDS LEGENDS
         </motion.h1>
 
         <motion.p
-          className="mt-6 font-serif text-2xl italic text-foreground sm:text-3xl lg:text-4xl"
+          className="mt-6 max-w-2xl font-serif text-2xl italic text-foreground sm:text-3xl lg:text-4xl"
           variants={fadeUp(18)}
           transition={{ duration: 0.6, ease: EASE as any, delay: 0.34 }}
         >
-          Welcome To The Inner Code
+          TONNANO is not a clothing brand. It is a code, a discipline and a standard.
         </motion.p>
 
         <motion.p
@@ -79,8 +79,8 @@ export function Hero() {
           className="mt-10 will-change-transform"
           variants={fadeUp(14)}
           transition={{ duration: 0.56, ease: EASE as any, delay: 0.58 }}
-          {...(!reduced ? hoverProps({ scale: 1.01 }) : {})}
-          {...(!reduced ? tapProps() : {})}
+          {...(!reduced ? { whileHover: { scale: 1.01 }, style: { willChange: 'transform' } } : {})}
+          {...(!reduced ? { whileTap: { scale: 0.995 } } : {})}
         >
           <WhitelistCtaButton
             variant="solid"

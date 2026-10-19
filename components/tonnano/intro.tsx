@@ -1,170 +1,152 @@
 'use client'
 
 import { AnimatePresence, motion } from 'motion/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-const EASE = [0.22, 1, 0.36, 1] as const
+const VIDEO_PATH = '/videos/tonnano-intro.mp4'
+const POSTER_PATH = '/placeholder.jpg'
 
-// Five staggered light streaks, positioned across the stage — the
-// ignition beat, like runway lights switching on down a catwalk before
-// the show starts. No logo mark involved.
-const STREAKS = [-36, -18, 0, 18, 36]
+type IntroPhase = 'signal' | 'decode' | 'film'
 
 export function Intro({ onDone }: { onDone: () => void }) {
   const [visible, setVisible] = useState(true)
-  const [closing, setClosing] = useState(false)
+  const [phase, setPhase] = useState<IntroPhase>('signal')
+  const [videoReady, setVideoReady] = useState(false)
+  const [videoFailed, setVideoFailed] = useState(false)
+  const [showSkip, setShowSkip] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
-    const settle = setTimeout(() => setClosing(true), 9300)
-    const unmount = setTimeout(() => setVisible(false), 9800)
+    const paintFrame = window.requestAnimationFrame(() => setVideoReady(true))
+    const decodeTimer = window.setTimeout(() => setPhase('decode'), 1800)
+    const filmTimer = window.setTimeout(() => setPhase('film'), 4000)
+    const skipTimer = window.setTimeout(() => setShowSkip(true), 2000)
+
     return () => {
-      clearTimeout(settle)
-      clearTimeout(unmount)
+      window.cancelAnimationFrame(paintFrame)
+      window.clearTimeout(decodeTimer)
+      window.clearTimeout(filmTimer)
+      window.clearTimeout(skipTimer)
     }
   }, [])
+
+  useEffect(() => {
+    if (!videoReady || videoFailed) return
+    const video = videoRef.current
+    if (!video) return
+
+    const playVideo = async () => {
+      try {
+        await video.play()
+      } catch {
+        // Autoplay can be blocked by the browser; the video remains available via controls.
+      }
+    }
+    void playVideo()
+  }, [videoReady, videoFailed])
+
+  const close = () => setVisible(false)
 
   return (
     <AnimatePresence onExitComplete={onDone}>
       {visible && (
-        <motion.div className="fixed inset-0 z-[100] overflow-hidden bg-background">
-          {/* Two panels split apart on exit — an atelier door opening */}
-          <motion.div
-            className="absolute inset-y-0 left-0 w-1/2 bg-background"
-            exit={{ x: '-100%' }}
-            transition={{ duration: 1.0, ease: EASE }}
-          />
-          <motion.div
-            className="absolute inset-y-0 right-0 w-1/2 bg-background"
-            exit={{ x: '100%' }}
-            transition={{ duration: 1.0, ease: EASE }}
-          />
+        <motion.div
+          className="fixed inset-0 z-[100] overflow-hidden bg-black text-[#f2efe8]"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          role="dialog"
+          aria-label="TONNANO cinematic introduction"
+        >
+          {!videoFailed && (
+            <motion.video
+              ref={videoRef}
+              className="absolute inset-0 size-full object-cover"
+              autoPlay
+              muted
+              playsInline
+              preload="metadata"
+              poster={POSTER_PATH}
+              onEnded={close}
+              onError={() => setVideoFailed(true)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: phase === 'film' ? 0.62 : 0 }}
+              transition={{ duration: 1.8, ease: 'easeInOut' }}
+            >
+              {videoReady && <source src={VIDEO_PATH} type="video/mp4" />}
+            </motion.video>
+          )}
 
-          {/* Ignition: staggered light streaks sweeping in */}
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            {STREAKS.map((offset, i) => (
-              <motion.div
-                key={i}
-                className="absolute top-0 h-full w-px bg-gradient-to-b from-transparent via-primary/70 to-transparent"
-                style={{ left: `calc(50% + ${offset}%)`, transformOrigin: 'top' }}
-                initial={{ scaleY: 0, opacity: 0 }}
-                animate={{ scaleY: [0, 1, 1, 0.2], opacity: [0, 1, 1, 0] }}
-                transition={{ duration: 1.15, times: [0, 0.3, 0.7, 1], delay: i * 0.14, ease: EASE }}
-              />
-            ))}
+          <div className="absolute inset-0 bg-black/45" aria-hidden="true" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_12%,rgba(0,0,0,0.88)_100%)]" aria-hidden="true" />
+          <div className="grain absolute inset-0 opacity-25" aria-hidden="true" />
 
-            {/* Central beam gathering the light */}
-            <motion.div
-              className="absolute h-full w-[2px] bg-gradient-to-b from-transparent via-primary to-transparent"
-              initial={{ scaleY: 0, opacity: 0 }}
-              animate={{ scaleY: [0, 1, 1], opacity: [0, 1, 0] }}
-              transition={{ duration: 1.0, times: [0, 0.55, 1], delay: 1.1, ease: EASE }}
-            />
+          {videoFailed && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black" role="status">
+              <p className="font-serif text-4xl tracking-[0.28em] text-[#f2efe8] sm:text-6xl">TONNANO</p>
+            </div>
+          )}
+
+          <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
+            <AnimatePresence mode="wait">
+              {phase === 'signal' && (
+                <motion.p
+                  key="signal"
+                  className="chapter-signal font-sans text-[0.68rem] tracking-[0.38em] text-[#f2efe8]/70"
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -14 }}
+                  transition={{ duration: 0.9 }}
+                >
+                  A SIGNAL HAS BEEN SENT
+                </motion.p>
+              )}
+              {phase === 'decode' && (
+                <motion.p
+                  key="decode"
+                  className="max-w-3xl font-serif text-3xl font-light leading-tight tracking-[0.08em] text-[#f2efe8] sm:text-5xl"
+                  initial={{ opacity: 0, filter: 'blur(8px)' }}
+                  animate={{ opacity: 1, filter: 'blur(0)' }}
+                  exit={{ opacity: 0, filter: 'blur(8px)' }}
+                  transition={{ duration: 1.2 }}
+                >
+                  YOU DO NOT VISIT TONNANO. YOU DECODE IT.
+                </motion.p>
+              )}
+              {phase === 'film' && (
+                <motion.div
+                  key="film"
+                  className="flex flex-col items-center"
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1.2 }}
+                >
+                  <p className="font-serif text-5xl font-light tracking-[0.12em] text-[#f2efe8] sm:text-7xl">TIME BUILDS LEGENDS</p>
+                  <p className="mt-5 font-sans text-sm tracking-[0.12em] text-[#f2efe8]/70">The first chapter begins before the first drop.</p>
+                  <button
+                    type="button"
+                    onClick={close}
+                    className="mt-10 border border-[#b08968]/75 px-8 py-3 font-sans text-[0.62rem] tracking-[0.28em] text-[#f2efe8] transition-colors hover:bg-[#b08968] hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#b08968]"
+                  >
+                    BEGIN DECODING
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
-          {/* Ignition payoff flash */}
-          <motion.div
-            className="pointer-events-none absolute inset-0 bg-white mix-blend-screen"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 0, 0.6, 0] }}
-            transition={{ duration: 2.2, times: [0, 0.78, 0.86, 1], ease: 'easeOut' }}
-          />
-
-          {/* Ambient warmth, settling after ignition */}
-          <motion.div
-            className="pointer-events-none absolute left-1/2 top-1/2 h-[120vmax] w-[120vmax] -translate-x-1/2 -translate-y-1/2"
-            style={{
-              background:
-                'radial-gradient(circle, rgba(243,107,33,0.14) 0%, rgba(243,107,33,0.04) 30%, rgba(0,0,0,0) 60%)',
-            }}
-            initial={{ opacity: 0, scale: 1.25 }}
-            animate={{ opacity: closing ? 0 : 1, scale: closing ? 1.06 : 1 }}
-            transition={{ duration: closing ? 0.5 : 1.4, ease: EASE, delay: closing ? 0 : 1.9 }}
-          />
-
-          <motion.div
-            className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center"
-            animate={{
-              opacity: closing ? 0 : 1,
-              scale: closing ? 0.97 : 1,
-              filter: closing ? 'blur(6px)' : 'blur(0px)',
-            }}
-            transition={{ duration: 0.5, ease: EASE }}
-          >
-            {/* Wordmark — a curtain lifts as the letter-spacing contracts,
-                the classic luxury-house reveal, no logo mark needed. */}
-            <div className="flex items-baseline justify-center gap-3">
-              <motion.span
-                className="font-sans text-5xl font-semibold sm:text-7xl"
-                style={{ clipPath: 'inset(0% 0% 100% 0%)' }}
-                initial={{ letterSpacing: '0.55em', opacity: 0, scale: 1.05, color: '#ffffff' }}
-                animate={{
-                  letterSpacing: '0.02em',
-                  opacity: 1,
-                  scale: 1,
-                  clipPath: 'inset(0% 0% 0% 0%)',
-                  color: ['#ffffff', '#ffffff', '#f36b21', '#f36b21', '#b3121b', '#b3121b'],
-                }}
-                transition={{
-                  letterSpacing: { duration: 1.05, ease: EASE, delay: 2.25 },
-                  opacity: { duration: 1.05, ease: EASE, delay: 2.25 },
-                  scale: { duration: 1.05, ease: EASE, delay: 2.25 },
-                  clipPath: { duration: 1.05, ease: EASE, delay: 2.25 },
-                  color: {
-                    duration: 6.5,
-                    times: [0, 0.15, 0.35, 0.55, 0.78, 1],
-                    ease: 'easeInOut',
-                    delay: 2.25,
-                  },
-                }}
-              >
-                TONNANO
-              </motion.span>
-
-              {/* Credit — settles in beside the wordmark late in the sequence */}
-              <motion.span
-                className="translate-y-[3px] whitespace-nowrap font-serif text-xs italic text-foreground/45 sm:text-sm"
-                initial={{ opacity: 0, x: -8 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, ease: EASE, delay: 8.0 }}
-              >
-                By <span className="text-primary">Zariry</span>
-              </motion.span>
-            </div>
-
-            {/* Metallic sheen sweeping once across the settled wordmark */}
-            <motion.div
-              className="pointer-events-none absolute left-1/2 top-1/2 h-24 w-16 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-transparent via-white/25 to-transparent sm:w-24"
-              style={{ mixBlendMode: 'overlay' }}
-              initial={{ x: '-160%', opacity: 0 }}
-              animate={{ x: '160%', opacity: [0, 1, 0] }}
-              transition={{ duration: 1.0, ease: EASE, delay: 3.4 }}
-            />
-
-            <motion.p
-              className="mt-6 font-sans text-[0.65rem] tracking-luxury text-foreground/60 sm:text-xs"
+          {showSkip && (
+            <motion.button
+              type="button"
+              onClick={close}
+              className="absolute inset-x-0 bottom-7 z-10 mx-auto w-fit font-sans text-[0.58rem] tracking-[0.24em] text-[#f2efe8]/55 transition-colors hover:text-[#f2efe8] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#b08968]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.9, ease: EASE, delay: 4.3 }}
+              aria-label="Skip cinematic introduction"
             >
-              TRUE LUXURY IS IN THE DETAILS
-            </motion.p>
-
-            <motion.div
-              className="mt-6 h-px origin-center bg-gradient-to-r from-transparent via-primary to-transparent"
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ width: 120, opacity: 1 }}
-              transition={{ duration: 0.7, ease: EASE, delay: 5.1 }}
-            />
-
-            <motion.p
-              className="mt-6 font-serif text-lg italic text-foreground/80 sm:text-xl"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: EASE, delay: 5.6 }}
-            >
-              Est. 2026 — Made In Morocco
-            </motion.p>
-          </motion.div>
+              SKIP INTRO
+            </motion.button>
+          )}
         </motion.div>
       )}
     </AnimatePresence>

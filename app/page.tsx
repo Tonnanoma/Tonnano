@@ -1,4 +1,5 @@
 import { About } from '@/components/tonnano/about'
+import { Bilzerian } from '@/components/tonnano/bilzerian'
 import { Collection } from '@/components/tonnano/collection'
 import { Countdown } from '@/components/tonnano/countdown'
 import { Drop } from '@/components/tonnano/drop'
@@ -20,6 +21,7 @@ export default function Page() {
         <Drop />
         <InnerCode />
         <Collection />
+        <Bilzerian />
         <Countdown />
         <Whitelist />
         <Instagram />
