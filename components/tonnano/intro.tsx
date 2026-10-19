@@ -7,11 +7,16 @@ import { useEffect, useRef, useState } from 'react'
 export function Intro({ onDone }: { onDone: () => void }) {
   const [visible, setVisible] = useState(true)
   const [soundOn, setSoundOn] = useState(false)
+  const [phase, setPhase] = useState<'signal' | 'film'>('signal')
   const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
-    const timeout = window.setTimeout(() => setVisible(false), 11000)
-    return () => window.clearTimeout(timeout)
+    const timeout = window.setTimeout(() => setPhase('film'), 2600)
+    const closeTimeout = window.setTimeout(() => setVisible(false), 18000)
+    return () => {
+      window.clearTimeout(timeout)
+      window.clearTimeout(closeTimeout)
+    }
   }, [])
 
   useEffect(() => {
@@ -29,17 +34,25 @@ export function Intro({ onDone }: { onDone: () => void }) {
           exit={{ opacity: 0 }}
           transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
         >
-          <video
-            ref={videoRef}
-            autoPlay
-            muted={!soundOn}
-            playsInline
-            onEnded={close}
-            poster="/intro.png"
-            className="absolute inset-0 size-full object-cover opacity-70"
+          <motion.div
+            className="absolute inset-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: phase === 'film' ? 1 : 0 }}
+            transition={{ duration: 1.4 }}
+            aria-hidden={phase !== 'film'}
           >
-            <source src={INTRO_VIDEO} type="video/mp4" />
-          </video>
+            <video
+              ref={videoRef}
+              autoPlay
+              muted={!soundOn}
+              playsInline
+              onEnded={close}
+              poster="/intro.png"
+              className="absolute inset-0 size-full object-cover opacity-70"
+            >
+              <source src={INTRO_VIDEO} type="video/mp4" />
+            </video>
+          </motion.div>
           <div className="absolute inset-0 bg-[#050505]/55" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_10%,#050505_100%)] opacity-75" />
           <div className="grain absolute inset-0 opacity-25" aria-hidden="true" />
