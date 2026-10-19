@@ -43,8 +43,6 @@ export const IMAGES = {
 export const INSTAGRAM_URL = 'https://www.instagram.com/tonnano.official/'
 export const FACEBOOK_URL = 'https://web.facebook.com/tonnanomorocco'
 export const LINKEDIN_URL = 'https://www.linkedin.com/company/tonnanomorocco'
-export const INTRO_VIDEO = 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Video%202026-10-14%20at%2001.51.58-bUnDTROOc9immwV9pV45hLDCC8y3iW.mp4'
-
 // Drop date — intentionally private and never used as a public countdown target.
 export const DROP_DATE = '2026-08-01T12:00:00Z'
 
