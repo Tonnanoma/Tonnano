@@ -1,0 +1,3 @@
+import Link from 'next/link'
+import ArchiveScene from '@/components/three/ArchiveScene'
+export default function Showroom(){return <main className="subpage showroom-page"><header className="topbar"><Link href="/" className="wordmark">TONNANO<span>®</span></Link><Link className="access-link" href="/collections">COLLECTIONS ↗</Link></header><section className="showroom-copy"><p className="eyebrow">THE ARCHIVE / SHOWROOM</p><h1>ROOM<br/><i>01.</i></h1><p className="subpage-intro">A dark gallery for the objects that carry the signal. Orbit the room, then enter the collection.</p><Link className="button button-bronze" href="/collections/first-signal">ENTER FIRST SIGNAL ↗</Link></section><ArchiveScene/></main>}

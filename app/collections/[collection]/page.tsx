@@ -1,0 +1,6 @@
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import { findCollection, collections } from '@/lib/catalog'
+import ArchiveScene from '@/components/three/ArchiveScene'
+export function generateStaticParams(){return collections.map(({slug})=>({collection:slug}))}
+export default async function CollectionPage({params}:{params:Promise<{collection:string}>}){const {collection}=await params;const data=findCollection(collection);if(!data)notFound();return <main className="subpage"><header className="topbar"><Link href="/" className="wordmark">TONNANO<span>®</span></Link><nav><Link href="/archive">ARCHIVE</Link><Link href="/collections">COLLECTIONS</Link><Link href="/inner-code">INNER CODE</Link></nav><Link className="access-link" href="/whitelist">REQUEST ACCESS ↗</Link></header><section className="collection-hero"><div><p className="eyebrow">COLLECTION / {data.name.toUpperCase()}</p><h1>{data.name}</h1><p className="subpage-intro">{data.intro}</p></div><ArchiveScene/></section><section className="product-grid">{data.products.map((item)=><Link className="product-card" key={item.slug} href={`/collections/${data.slug}/${item.slug}`}><div className="product-art"><img src={item.image} alt="" /></div><p className="eyebrow">{item.eyebrow}</p><h2>{item.name}</h2><span>WHITELIST ACCESS ↗</span></Link>)}</section></main>}
