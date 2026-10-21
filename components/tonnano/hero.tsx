@@ -4,13 +4,11 @@ import { IMAGES } from '@/lib/site'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import { useRef } from 'react'
-import { useTranslations } from 'next-intl'
 import { EASE, staggerContainer, fadeUp, usePrefersReducedMotion, useParallax, hoverProps, tapProps } from './animation'
 import { WhitelistCtaButton } from './whitelist-cta-button'
 
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null)
-  const t = useTranslations('hero')
   const reduced = usePrefersReducedMotion()
   const parallaxRef = useRef<HTMLDivElement>(null)
   const { y } = useParallax(parallaxRef, [0, 12])
@@ -50,7 +48,7 @@ export function Hero() {
           variants={fadeUp(12)}
           transition={{ duration: 0.56, ease: EASE as any, delay: 0.12 }}
         >
-          EST. 2026 — {t('eyebrow')}
+          EST. 2026 — MADE IN MOROCCO
         </motion.span>
 
         <motion.h1
@@ -66,7 +64,7 @@ export function Hero() {
           variants={fadeUp(18)}
           transition={{ duration: 0.6, ease: EASE as any, delay: 0.34 }}
         >
-          {t('title')}
+          Welcome To The Inner Code
         </motion.p>
 
         <motion.p
@@ -74,7 +72,7 @@ export function Hero() {
           variants={fadeUp(16)}
           transition={{ duration: 0.56, ease: EASE as any, delay: 0.46 }}
         >
-          {t('subtitle')}
+          The first chapter begins before the first drop.
         </motion.p>
 
         <motion.div
