@@ -42,8 +42,23 @@ export const IMAGES = {
 
 export const INSTAGRAM_URL = 'https://www.instagram.com/tonnanoma/'
 
-// Drop date — August 2026
-export const DROP_DATE = '2026-08-01T12:00:00Z'
+// One source of truth for the launch moment. Casablanca is UTC+01:00 in November.
+export const DROP_DATE = new Date('2026-11-12T00:00:00+01:00')
+
+export const CLUES = [
+  'TOMORROW',
+  '12 / 11 / 2026',
+  '12 / 12 / 2026',
+  'MOHAMMEDIA',
+  'MARRAKECH',
+  'LYOUM 9BEL GHEDA',
+  '08 / 09 / 1998',
+  'PALESTINE',
+  'CHAPTER I',
+  'N° 001 / 1000',
+  'NO RESTOCK',
+  'TIME BUILDS LEGENDS',
+] as const
 
 export const NAV_LINKS = [
   { label: 'About', href: '#about' },

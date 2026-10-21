@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: '%s · TONNANO',
   },
   description:
-    'TONNANO. Luxury streetwear crafted in Morocco. Limited production, timeless design. Join the Inner Code ahead of Drop 01, August 2026.',
+    'TONNANO. Luxury streetwear crafted in Morocco. Limited production, timeless design. Join the Inner Code ahead of Drop 01, November 2026.',
   keywords: [
     'TONNANO',
     'luxury streetwear',
@@ -38,15 +38,18 @@ export const metadata: Metadata = {
     description:
       'Luxury streetwear crafted in Morocco. Limited production, timeless design. Join the Inner Code.',
     url: 'https://tonnano.com',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'TONNANO — Time Builds Legends' }],
     siteName: 'TONNANO',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'TONNANO — Time Builds Legends',
-    description:
-      'Luxury streetwear crafted in Morocco. Limited production, timeless design.',
+    description: 'Luxury streetwear crafted in Morocco. Limited production, timeless design.',
+    images: ['/og-image.png'],
   },
+  alternates: { canonical: 'https://tonnano.com' },
+  icons: { icon: '/icon.svg', apple: '/apple-icon.png' },
   generator: 'v0.app',
 }
 

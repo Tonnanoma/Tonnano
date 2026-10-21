@@ -27,7 +27,7 @@ export function About() {
           <div className="mt-8 space-y-6 font-sans text-sm leading-relaxed text-foreground/70 sm:text-base">
             <p>
               TONNANO is currently opening access to its founding members ahead
-              of the official August Drop. Joining the whitelist is not simply
+              of the official November Drop. Joining the whitelist is not simply
               reserving a garment — it is becoming part of the TONNANO story
               from day one.
             </p>

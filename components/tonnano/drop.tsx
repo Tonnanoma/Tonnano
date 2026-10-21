@@ -42,7 +42,7 @@ export function Drop() {
         </Reveal>
         <Reveal delay={0.15}>
           <p className="mt-3 font-sans text-sm tracking-luxury text-foreground/70">
-            AUGUST 2026
+            NOVEMBER 2026
           </p>
         </Reveal>
         <Reveal delay={0.2}>
