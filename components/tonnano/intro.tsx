@@ -24,8 +24,8 @@ export function Intro({ onDone }: { onDone: () => void }) {
       window.setTimeout(() => setVideoSrc('/videos/tonnano-intro.mp4'), 120)
     })
 
-    const skipTimer = window.setTimeout(() => setShowSkip(true), 2000)
-    const openingTimer = window.setTimeout(() => setPhase('video'), 4400)
+    const skipTimer = window.setTimeout(() => setShowSkip(true), 2200)
+    const openingTimer = window.setTimeout(() => setPhase('video'), 5600)
 
     return () => {
       window.cancelAnimationFrame(paint)
@@ -87,6 +87,31 @@ export function Intro({ onDone }: { onDone: () => void }) {
             </div>
           )}
 
+          {/* Lumière rouge qui envahit l'écran avant la vidéo */}
+          <motion.div
+            className="pointer-events-none absolute inset-0 z-[5]"
+            initial={{ opacity: 0 }}
+            animate={
+              phase === 'opening'
+                ? {
+                    opacity: [0, 0, 0.25, 0.75, 0],
+                    background: [
+                      'radial-gradient(circle at center, rgba(255,70,0,0) 0%, rgba(0,0,0,0) 70%)',
+                      'radial-gradient(circle at center, rgba(255,70,0,0) 0%, rgba(0,0,0,0) 70%)',
+                      'radial-gradient(circle at center, rgba(255,90,0,.35) 0%, rgba(0,0,0,0) 70%)',
+                      'radial-gradient(circle at center, rgba(255,30,0,.75) 0%, rgba(120,0,0,.35) 60%, rgba(0,0,0,0) 100%)',
+                      'radial-gradient(circle at center, rgba(255,255,255,.9) 0%, rgba(255,60,0,.5) 45%, rgba(0,0,0,0) 100%)',
+                    ],
+                  }
+                : { opacity: 0 }
+            }
+            transition={{
+              duration: 5.6,
+              times: [0, 0.55, 0.72, 0.88, 1],
+              ease: 'easeInOut',
+            }}
+          />
+
           <div className="pointer-events-none absolute inset-0 bg-black/35" />
 
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(0,0,0,.78)_100%)]" />
@@ -95,53 +120,92 @@ export function Intro({ onDone }: { onDone: () => void }) {
 
           {phase === 'opening' && (
             <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-              <motion.p
-                className="text-[10px] font-medium tracking-[0.45em] text-white/75 sm:text-xs"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{
-                  opacity: [0, 1, 1, 0],
-                  y: [8, 0, 0, -8],
-                }}
-                transition={{
-                  duration: 3.2,
-                  times: [0, 0.25, 0.78, 1],
-                  ease: 'easeInOut',
-                }}
-              >
-                A SIGNAL HAS BEEN SENT
-              </motion.p>
+              <motion.div
+                className="h-px w-16 bg-white/30"
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ scaleX: 1, opacity: 1 }}
+                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+              />
 
               <motion.h1
-                className="mt-7 max-w-3xl font-serif text-3xl leading-tight sm:text-6xl"
-                initial={{ opacity: 0, y: 12 }}
+                className="mt-8 font-serif text-4xl tracking-[0.18em] sm:text-7xl"
+                initial={{
+                  opacity: 0,
+                  filter: 'blur(18px)',
+                  color: '#FFFFFF',
+                  textShadow: '0 0 30px rgba(255,255,255,.35)',
+                }}
                 animate={{
-                  opacity: [0, 0, 1, 1, 0],
-                  y: [12, 12, 0, 0, -10],
+                  opacity: [0, 1, 1, 1],
+                  filter: [
+                    'blur(18px)',
+                    'blur(0px)',
+                    'blur(0px)',
+                    'blur(0px)',
+                  ],
+                  color: ['#FFFFFF', '#FFFFFF', '#FF7A00', '#FF1E00'],
+                  textShadow: [
+                    '0 0 30px rgba(255,255,255,.35)',
+                    '0 0 30px rgba(255,255,255,.35)',
+                    '0 0 45px rgba(255,122,0,.65)',
+                    '0 0 80px rgba(255,30,0,.95)',
+                  ],
+                  scale: [1, 1, 1.02, 1.08],
                 }}
                 transition={{
-                  duration: 4,
-                  times: [0, 0.24, 0.42, 0.82, 1],
+                  duration: 4.6,
+                  times: [0, 0.3, 0.62, 1],
                   ease: 'easeInOut',
                 }}
               >
-                YOU DO NOT VISIT TONNANO. YOU DECODE IT.
+                TONNANO
               </motion.h1>
+
+              <motion.p
+                className="mt-6 text-[10px] tracking-[0.5em] text-white/50 sm:text-xs"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{
+                  opacity: [0, 1, 1, 0],
+                  y: [10, 0, 0, -8],
+                }}
+                transition={{
+                  duration: 3.4,
+                  delay: 1.2,
+                  times: [0, 0.25, 0.75, 1],
+                  ease: 'easeInOut',
+                }}
+              >
+                TIME BUILDS LEGENDS
+              </motion.p>
+
+              <motion.div
+                className="mt-10 h-px w-24 bg-white/20"
+                initial={{ scaleX: 0 }}
+                animate={{
+                  scaleX: [0, 1, 1],
+                  opacity: [0, 1, 0],
+                }}
+                transition={{
+                  duration: 3.6,
+                  delay: 1.6,
+                  times: [0, 0.55, 1],
+                  ease: 'easeInOut',
+                }}
+              />
             </div>
           )}
 
           {phase === 'video' && !failed && (
-            <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-              <motion.button
-                type="button"
-                onClick={finish}
-                className="absolute bottom-20 border border-white/45 px-7 py-3 text-[10px] tracking-[0.35em] text-white transition-colors hover:border-white hover:bg-white hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 5.2, duration: 0.8 }}
-              >
-                BEGIN DECODING
-              </motion.button>
-            </div>
+            <motion.button
+              type="button"
+              onClick={finish}
+              className="absolute bottom-20 left-1/2 z-10 -translate-x-1/2 border border-white/40 px-8 py-3 text-[10px] tracking-[0.4em] text-white transition-colors hover:border-white hover:bg-white hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 4.6, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            >
+              ENTER
+            </motion.button>
           )}
 
           {showSkip && phase !== 'closing' && (
