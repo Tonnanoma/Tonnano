@@ -40,10 +40,16 @@ export const IMAGES = {
     'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260625-WA0016%281%29-NKqp1NbmhRPVz6Snwsv9Cm1yQJgWm8.jpg',
 } as const
 
-export const INSTAGRAM_URL = 'https://www.instagram.com/tonnanoma/'
+export const socialLinks = [
+  { name: 'Instagram', url: 'https://www.instagram.com/tonnano.official/', icon: 'instagram', label: 'TONNANO on Instagram' },
+  { name: 'Facebook', url: 'https://web.facebook.com/tonnanomorocco', icon: 'facebook', label: 'TONNANO on Facebook' },
+  { name: 'LinkedIn', url: 'https://www.linkedin.com/company/tonnanomorocco', icon: 'linkedin', label: 'TONNANO on LinkedIn' },
+] as const
 
-// Drop date — August 2026
-export const DROP_DATE = '2026-08-01T12:00:00Z'
+export const INSTAGRAM_URL = socialLinks[0].url
+
+// Mystery mode is the default: the drop date is intentionally unrevealed.
+export const DROP_DATE: string | null = null
 
 export const NAV_LINKS = [
   { label: 'About', href: '#about' },

@@ -15,5 +15,6 @@ export default async function LocaleLayout({children, params}: Readonly<{childre
   const {locale} = await params
   if (!isLocale(locale)) notFound()
   const messages = await getMessages(locale)
-  return <NextIntlClientProvider locale={locale} messages={messages}><div lang={locale} dir={rtlLocales.includes(locale) ? 'rtl' : 'ltr'}>{children}</div></NextIntlClientProvider>
+  const direction = rtlLocales.includes(locale) ? 'rtl' : 'ltr'
+  return <NextIntlClientProvider locale={locale} messages={messages}><div lang={locale} dir={direction} className={direction === 'rtl' ? 'font-sans' : undefined}>{children}</div></NextIntlClientProvider>
 }
