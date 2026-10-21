@@ -103,7 +103,6 @@ export function Intro({ onDone }: { onDone: () => void }) {
                 animate={{ opacity: [0, 1, 1, 0], y: [18, 0, 0, -14] }}
                 transition={{ duration: 5.5, delay: 0.35, times: [0, 0.18, 0.72, 1], ease: 'easeInOut' }}
               >
-                <p className="text-[10px] tracking-[0.5em] text-white/70 sm:text-xs">TIME BUILDS LEGENDS</p>
                 <p className="mt-5 font-serif text-2xl italic text-white/90 sm:text-4xl">
                   The first chapter begins before the first drop.
                 </p>
