@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: '%s · TONNANO',
   },
   description:
-    'TONNANO. Luxury streetwear crafted in Morocco. Limited production, timeless design. Join the Inner Code ahead of Drop 01.'
+    'TONNANO. Luxury streetwear crafted in Morocco. Limited production, timeless design. Join the Inner Code ahead of Drop 01, August 2026.',
   keywords: [
     'TONNANO',
     'luxury streetwear',
