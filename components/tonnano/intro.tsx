@@ -23,8 +23,10 @@ export function Intro({ onDone }: { onDone: () => void }) {
     const paint = window.requestAnimationFrame(() => {
       window.setTimeout(() => setVideoSrc('/videos/tonnano-intro.mp4'), 120)
     })
+
     const skipTimer = window.setTimeout(() => setShowSkip(true), 2000)
-    const openingTimer = window.setTimeout(() => setPhase('video'), 4100)
+    const openingTimer = window.setTimeout(() => setPhase('video'), 4400)
+
     return () => {
       window.cancelAnimationFrame(paint)
       window.clearTimeout(skipTimer)
@@ -66,13 +68,17 @@ export function Intro({ onDone }: { onDone: () => void }) {
             <div className="absolute inset-0 flex items-center justify-center bg-black">
               <div className="text-center">
                 <p className="font-serif text-5xl tracking-[0.18em] sm:text-7xl">TONNANO</p>
-                <p className="mt-4 text-[10px] tracking-[0.42em] text-white/45">TIME BUILDS LEGENDS</p>
+                <p className="mt-4 text-[10px] tracking-[0.42em] text-white/45">
+                  TIME BUILDS LEGENDS
+                </p>
               </div>
             </div>
           )}
 
           <div className="pointer-events-none absolute inset-0 bg-black/35" />
+
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(0,0,0,.78)_100%)]" />
+
           <div className="pointer-events-none absolute inset-0 opacity-[0.13] mix-blend-screen [background-image:url('/intro.png')] [background-size:480px] [filter:grayscale(1)]" />
 
           {phase === 'opening' && (
@@ -80,13 +86,31 @@ export function Intro({ onDone }: { onDone: () => void }) {
               <motion.p
                 className="text-[10px] font-medium tracking-[0.45em] text-white/75 sm:text-xs"
                 initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: [0, 1, 1, 0], y: [8, 0, 0, -8] }}
-                transition={{ duration: 3.2, times: [0, 0.25, 0.78, 1], ease: 'easeInOut' }}
+                animate={{
+                  opacity: [0, 1, 1, 0],
+                  y: [8, 0, 0, -8],
+                }}
+                transition={{
+                  duration: 3.2,
+                  times: [0, 0.25, 0.78, 1],
+                  ease: 'easeInOut',
+                }}
+              >
+                A SIGNAL HAS BEEN SENT
+              </motion.p>
+
               <motion.h1
                 className="mt-7 max-w-3xl font-serif text-3xl leading-tight sm:text-6xl"
                 initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: [0, 0, 1, 1, 0], y: [12, 12, 0, 0, -10] }}
-                transition={{ duration: 4, times: [0, 0.24, 0.42, 0.82, 1], ease: 'easeInOut' }}
+                animate={{
+                  opacity: [0, 0, 1, 1, 0],
+                  y: [12, 12, 0, 0, -10],
+                }}
+                transition={{
+                  duration: 4,
+                  times: [0, 0.24, 0.42, 0.82, 1],
+                  ease: 'easeInOut',
+                }}
               >
                 YOU DO NOT VISIT TONNANO. YOU DECODE IT.
               </motion.h1>
@@ -97,9 +121,27 @@ export function Intro({ onDone }: { onDone: () => void }) {
             <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
               <motion.div
                 initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: [0, 1, 1, 0], y: [18, 0, 0, -14] }}
-                transition={{ duration: 5.5, delay: 0.35, times: [0, 0.18, 0.72, 1], ease: 'easeInOut' }}
+                animate={{
+                  opacity: [0, 1, 1, 0],
+                  y: [18, 0, 0, -14],
+                }}
+                transition={{
+                  duration: 5.5,
+                  delay: 0.35,
+                  times: [0, 0.18, 0.72, 1],
+                  ease: 'easeInOut',
+                }}
+                className="max-w-3xl"
+              >
+                <p className="font-serif text-2xl leading-tight sm:text-5xl">
+                  TIME BUILDS LEGENDS
+                </p>
+
+                <p className="mt-5 text-[10px] tracking-[0.42em] text-white/55">
+                  THE FIRST CHAPTER BEGINS BEFORE THE FIRST DROP
+                </p>
               </motion.div>
+
               <motion.button
                 type="button"
                 onClick={finish}
