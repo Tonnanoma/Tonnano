@@ -82,9 +82,6 @@ export function Intro({ onDone }: { onDone: () => void }) {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: [0, 1, 1, 0], y: [8, 0, 0, -8] }}
                 transition={{ duration: 3.2, times: [0, 0.25, 0.78, 1], ease: 'easeInOut' }}
-              >
-                A SIGNAL HAS BEEN SENT
-              </motion.p>
               <motion.h1
                 className="mt-7 max-w-3xl font-serif text-3xl leading-tight sm:text-6xl"
                 initial={{ opacity: 0, y: 12 }}
