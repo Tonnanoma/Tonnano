@@ -25,7 +25,7 @@ export function Intro({ onDone }: { onDone: () => void }) {
     })
 
     const skipTimer = window.setTimeout(() => setShowSkip(true), 2200)
-    const openingTimer = window.setTimeout(() => setPhase('video'), 5600)
+    const openingTimer = window.setTimeout(() => setPhase('video'), 5200)
 
     return () => {
       window.cancelAnimationFrame(paint)
@@ -87,31 +87,6 @@ export function Intro({ onDone }: { onDone: () => void }) {
             </div>
           )}
 
-          {/* Lumière rouge qui envahit l'écran avant la vidéo */}
-          <motion.div
-            className="pointer-events-none absolute inset-0 z-[5]"
-            initial={{ opacity: 0 }}
-            animate={
-              phase === 'opening'
-                ? {
-                    opacity: [0, 0, 0.25, 0.75, 0],
-                    background: [
-                      'radial-gradient(circle at center, rgba(255,70,0,0) 0%, rgba(0,0,0,0) 70%)',
-                      'radial-gradient(circle at center, rgba(255,70,0,0) 0%, rgba(0,0,0,0) 70%)',
-                      'radial-gradient(circle at center, rgba(255,90,0,.35) 0%, rgba(0,0,0,0) 70%)',
-                      'radial-gradient(circle at center, rgba(255,30,0,.75) 0%, rgba(120,0,0,.35) 60%, rgba(0,0,0,0) 100%)',
-                      'radial-gradient(circle at center, rgba(255,255,255,.9) 0%, rgba(255,60,0,.5) 45%, rgba(0,0,0,0) 100%)',
-                    ],
-                  }
-                : { opacity: 0 }
-            }
-            transition={{
-              duration: 5.6,
-              times: [0, 0.55, 0.72, 0.88, 1],
-              ease: 'easeInOut',
-            }}
-          />
-
           <div className="pointer-events-none absolute inset-0 bg-black/35" />
 
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(0,0,0,.78)_100%)]" />
@@ -129,34 +104,9 @@ export function Intro({ onDone }: { onDone: () => void }) {
 
               <motion.h1
                 className="mt-8 font-serif text-4xl tracking-[0.18em] sm:text-7xl"
-                initial={{
-                  opacity: 0,
-                  filter: 'blur(18px)',
-                  color: '#FFFFFF',
-                  textShadow: '0 0 30px rgba(255,255,255,.35)',
-                }}
-                animate={{
-                  opacity: [0, 1, 1, 1],
-                  filter: [
-                    'blur(18px)',
-                    'blur(0px)',
-                    'blur(0px)',
-                    'blur(0px)',
-                  ],
-                  color: ['#FFFFFF', '#FFFFFF', '#FF7A00', '#FF1E00'],
-                  textShadow: [
-                    '0 0 30px rgba(255,255,255,.35)',
-                    '0 0 30px rgba(255,255,255,.35)',
-                    '0 0 45px rgba(255,122,0,.65)',
-                    '0 0 80px rgba(255,30,0,.95)',
-                  ],
-                  scale: [1, 1, 1.02, 1.08],
-                }}
-                transition={{
-                  duration: 4.6,
-                  times: [0, 0.3, 0.62, 1],
-                  ease: 'easeInOut',
-                }}
+                initial={{ opacity: 0, filter: 'blur(10px)' }}
+                animate={{ opacity: 1, filter: 'blur(0px)' }}
+                transition={{ duration: 1.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
               >
                 TONNANO
               </motion.h1>
@@ -164,16 +114,8 @@ export function Intro({ onDone }: { onDone: () => void }) {
               <motion.p
                 className="mt-6 text-[10px] tracking-[0.5em] text-white/50 sm:text-xs"
                 initial={{ opacity: 0, y: 10 }}
-                animate={{
-                  opacity: [0, 1, 1, 0],
-                  y: [10, 0, 0, -8],
-                }}
-                transition={{
-                  duration: 3.4,
-                  delay: 1.2,
-                  times: [0, 0.25, 0.75, 1],
-                  ease: 'easeInOut',
-                }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.4, delay: 1.4, ease: [0.22, 1, 0.36, 1] }}
               >
                 TIME BUILDS LEGENDS
               </motion.p>
@@ -181,16 +123,8 @@ export function Intro({ onDone }: { onDone: () => void }) {
               <motion.div
                 className="mt-10 h-px w-24 bg-white/20"
                 initial={{ scaleX: 0 }}
-                animate={{
-                  scaleX: [0, 1, 1],
-                  opacity: [0, 1, 0],
-                }}
-                transition={{
-                  duration: 3.6,
-                  delay: 1.6,
-                  times: [0, 0.55, 1],
-                  ease: 'easeInOut',
-                }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 1.6, delay: 1.8, ease: [0.22, 1, 0.36, 1] }}
               />
             </div>
           )}
