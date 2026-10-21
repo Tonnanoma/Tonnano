@@ -40,6 +40,18 @@ export function Intro({ onDone }: { onDone: () => void }) {
     }
   }, [phase, videoSrc])
 
+  useEffect(() => {
+    if (phase !== 'video') return
+
+    const videoDurationTimer = window.setTimeout(() => {
+      finish()
+    }, 6000)
+
+    return () => {
+      window.clearTimeout(videoDurationTimer)
+    }
+  }, [phase, finish])
+
   return (
     <AnimatePresence onExitComplete={onDone}>
       {visible && (
@@ -119,29 +131,6 @@ export function Intro({ onDone }: { onDone: () => void }) {
 
           {phase === 'video' && !failed && (
             <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 18 }}
-                animate={{
-                  opacity: [0, 1, 1, 0],
-                  y: [18, 0, 0, -14],
-                }}
-                transition={{
-                  duration: 5.5,
-                  delay: 0.35,
-                  times: [0, 0.18, 0.72, 1],
-                  ease: 'easeInOut',
-                }}
-                className="max-w-3xl"
-              >
-                <p className="font-serif text-2xl leading-tight sm:text-5xl">
-                  TIME BUILDS LEGENDS
-                </p>
-
-                <p className="mt-5 text-[10px] tracking-[0.42em] text-white/55">
-                  THE FIRST CHAPTER BEGINS BEFORE THE FIRST DROP
-                </p>
-              </motion.div>
-
               <motion.button
                 type="button"
                 onClick={finish}
