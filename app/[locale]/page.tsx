@@ -1,5 +1,3 @@
-import {LandingPage} from '@/components/tonnano/landing-page'
+import Page from '@/app/page'
 
-export default function LocalizedPage() {
-  return <LandingPage />
-}
+export default function LocalizedPage() { return <Page /> }
