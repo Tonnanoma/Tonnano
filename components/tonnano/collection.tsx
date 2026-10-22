@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { Reveal } from './reveal'
+import { useLocale } from './locale-provider'
 
 type Item = {
   src: string
@@ -65,6 +66,7 @@ const ITEMS: Item[] = [
 ]
 
 export function Collection() {
+  const { messages: m } = useLocale()
   const [active, setActive] = useState<Item | null>(null)
 
   useEffect(() => {
@@ -86,10 +88,10 @@ export function Collection() {
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <Reveal>
             <span className="font-sans text-[0.65rem] tracking-luxury text-primary">
-              THE COLLECTION
+              {m.collection.eyebrow}
             </span>
             <h2 className="mt-6 font-serif text-5xl text-foreground sm:text-6xl">
-              Crafted In Detail
+              {m.collection.title}
             </h2>
           </Reveal>
           <Reveal delay={0.1}>

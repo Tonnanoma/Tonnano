@@ -32,7 +32,7 @@ function nextDelay() {
 }
 
 export function Countdown() {
-  const { locale } = useLocale()
+  const { locale, messages: m } = useLocale()
   const [valueIndex, setValueIndex] = useState(0)
   const [statusIndex, setStatusIndex] = useState(0)
 
@@ -62,8 +62,8 @@ export function Countdown() {
       <div className="pointer-events-none absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(194,166,111,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(194,166,111,0.06)_1px,transparent_1px)] [background-size:72px_72px]" />
       <div className="relative mx-auto max-w-5xl px-5 text-center sm:px-8">
         <Reveal>
-          <span className="font-sans text-[0.65rem] tracking-luxury text-[#c2a66f]">DROP 01</span>
-          <h2 className="mt-5 font-serif text-3xl text-[#eee7d9] sm:text-5xl">THE FIRST CHAPTER</h2>
+          <span className="font-sans text-[0.65rem] tracking-luxury text-[#c2a66f]">{m.drop.eyebrow}</span>
+          <h2 className="mt-5 font-serif text-3xl text-[#eee7d9] sm:text-5xl">{m.drop.eyebrow}</h2>
         </Reveal>
 
         <Reveal delay={0.12}>

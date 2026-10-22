@@ -2,6 +2,7 @@
 
 import { Tag, Package, KeyRound, Crown } from 'lucide-react'
 import { Reveal } from './reveal'
+import { useLocale } from './locale-provider'
 
 const CARDS = [
   {
@@ -27,23 +28,24 @@ const CARDS = [
 ]
 
 export function InnerCode() {
+  const { messages: m } = useLocale()
   return (
     <section id="inner-code" className="relative bg-background py-24 sm:py-36">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="text-center">
           <Reveal>
             <span className="font-sans text-[0.65rem] tracking-luxury text-primary">
-              MEMBERSHIP
+              {m.inner.eyebrow}
             </span>
           </Reveal>
           <Reveal delay={0.08}>
             <h2 className="mt-6 font-serif text-5xl text-foreground sm:text-7xl">
-              Inner Code
+{m.inner.title}
             </h2>
           </Reveal>
           <Reveal delay={0.14}>
             <p className="mt-5 font-sans text-sm tracking-wide-lux text-foreground/60">
-              LIMITED TO THE FIRST 1,000 MEMBERS
+              {m.inner.limit}
             </p>
           </Reveal>
         </div>
@@ -58,10 +60,10 @@ export function InnerCode() {
                   aria-hidden
                 />
                 <h3 className="mt-8 font-serif text-2xl text-foreground">
-                  {c.title}
+                  {m.inner.cards[i][0]}
                 </h3>
                 <p className="mt-4 font-sans text-sm leading-relaxed text-foreground/60">
-                  {c.body}
+                  {m.inner.cards[i][1]}
                 </p>
                 <span className="mt-8 font-sans text-[0.6rem] tracking-luxury text-foreground/30">
                   {String(i + 1).padStart(2, '0')}

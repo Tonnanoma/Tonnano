@@ -1,6 +1,10 @@
+'use client'
+
 import { INSTAGRAM_URL } from '@/lib/site'
+import { useLocale } from './locale-provider'
 
 export function Footer() {
+  const { messages: m } = useLocale()
   return (
     <footer className="border-t border-border bg-background">
       <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20">

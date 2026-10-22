@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils'
 import { AnimatePresence, motion } from 'motion/react'
 import { type MouseEvent, type ReactNode, useState } from 'react'
 import { usePrefersReducedMotion } from './animation'
+import { useLocale } from './locale-provider'
 
 type Ripple = { id: number; x: number; y: number }
 const RIPPLE_SIZE = 260
@@ -11,7 +12,7 @@ const RIPPLE_SIZE = 260
 export function WhitelistCtaButton({
   className,
   variant = 'outline',
-  children = 'JOIN THE WHITELIST',
+  children,
   onNavigate,
 }: {
   className?: string
@@ -21,6 +22,7 @@ export function WhitelistCtaButton({
 }) {
   const [ripples, setRipples] = useState<Ripple[]>([])
   const prefersReduced = usePrefersReducedMotion()
+  const { messages: m } = useLocale()
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
@@ -72,7 +74,7 @@ export function WhitelistCtaButton({
         className="pointer-events-none absolute inset-y-0 -left-1/2 z-10 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/35 to-transparent opacity-0 transition-[opacity,left] duration-700 ease-out group-hover:left-[130%] group-hover:opacity-100"
       />
 
-      <span className="relative z-10">{children}</span>
+      <span className="relative z-10">{children ?? m.hero.cta}</span>
 
       <AnimatePresence>
         {ripples.map((r) => (

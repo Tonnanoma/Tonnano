@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { type FormEvent, useEffect, useRef, useState } from 'react'
 import { EASE } from './animation'
 import { Reveal } from './reveal'
+import { useLocale } from './locale-provider'
 
 const FIELDS = [
   { name: 'firstName', label: 'First Name', type: 'text', required: true },
@@ -54,6 +55,7 @@ function SuccessEmbers() {
 }
 
 export function Whitelist() {
+  const { messages: m } = useLocale()
   const formRef = useRef<HTMLFormElement>(null)
   const [agreed, setAgreed] = useState(false)
   const [submitted, setSubmitted] = useState(false)

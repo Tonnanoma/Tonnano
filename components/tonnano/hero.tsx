@@ -4,10 +4,12 @@ import { IMAGES } from '@/lib/site'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import { useRef } from 'react'
+import { useLocale } from './locale-provider'
 import { EASE, staggerContainer, fadeUp, usePrefersReducedMotion, useParallax, hoverProps, tapProps } from './animation'
 import { WhitelistCtaButton } from './whitelist-cta-button'
 
 export function Hero() {
+  const { messages: m } = useLocale()
   const ref = useRef<HTMLDivElement>(null)
   const reduced = usePrefersReducedMotion()
   const parallaxRef = useRef<HTMLDivElement>(null)
@@ -48,7 +50,7 @@ export function Hero() {
           variants={fadeUp(12)}
           transition={{ duration: 0.56, ease: EASE as any, delay: 0.12 }}
         >
-          EST. 2026 — MADE IN MOROCCO
+          {m.hero.eyebrow}
         </motion.span>
 
         <motion.h1
@@ -64,7 +66,7 @@ export function Hero() {
           variants={fadeUp(18)}
           transition={{ duration: 0.6, ease: EASE as any, delay: 0.34 }}
         >
-          Welcome To The Inner Code
+          {m.hero.tagline}
         </motion.p>
 
         <motion.p
@@ -72,7 +74,7 @@ export function Hero() {
           variants={fadeUp(16)}
           transition={{ duration: 0.56, ease: EASE as any, delay: 0.46 }}
         >
-          The first chapter begins before the first drop.
+          {m.hero.intro}
         </motion.p>
 
         <motion.div
@@ -93,12 +95,12 @@ export function Hero() {
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
         {!reduced ? (
           <div className="flex flex-col items-center gap-3">
-            <span className="font-sans text-[0.6rem] tracking-luxury text-foreground/50">SCROLL</span>
+            <span className="font-sans text-[0.6rem] tracking-luxury text-foreground/50">{m.hero.scroll}</span>
             <div className="h-12 w-px bg-foreground/30 animate-pulse-slow" />
           </div>
         ) : (
           <div className="flex flex-col items-center gap-3">
-            <span className="font-sans text-[0.6rem] tracking-luxury text-foreground/50">SCROLL</span>
+            <span className="font-sans text-[0.6rem] tracking-luxury text-foreground/50">{m.hero.scroll}</span>
             <div className="h-12 w-px bg-foreground/30" />
           </div>
         )}

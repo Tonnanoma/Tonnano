@@ -19,6 +19,10 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     document.cookie = `tonnano_locale=${next}; path=/; max-age=31536000; samesite=lax`
   }
   const value = useMemo(() => ({ locale, setLocale, messages: getMessages(locale), localeNames }), [locale])
+  useEffect(() => {
+    document.documentElement.lang = locale
+    document.documentElement.dir = rtlLocales.includes(locale) ? 'rtl' : 'ltr'
+  }, [locale])
   return <LocaleContext.Provider value={value}><div dir={rtlLocales.includes(locale) ? 'rtl' : 'ltr'}>{children}</div></LocaleContext.Provider>
 }
 
