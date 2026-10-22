@@ -1,60 +1,79 @@
 'use client'
 
-import { DROP_DATE } from '@/lib/site'
 import { useEffect, useState } from 'react'
 import { Reveal } from './reveal'
 import { CountdownScene } from './countdown-scene'
 import { useLocale } from './locale-provider'
 
-function getRemaining(target: number) {
-  const diff = Math.max(0, target - Date.now())
-  return {
-    days: Math.floor(diff / 86400000),
-    hours: Math.floor((diff / 3600000) % 24),
-    minutes: Math.floor((diff / 60000) % 60),
-    seconds: Math.floor((diff / 1000) % 60),
-  }
+const SIGNAL_VALUES = [
+  '﷽', 'LYOUM 9BEL GHEDA', 'Morocco', 'مُبَاشَرَةً مِنْ مَدِينَةِ الْمُحَمَّدِيَّة', '12/11/2026',
+  'ZARIRY', "Le Serpent d'Airain", 'BIENTÔT', 'Palestine', '12/12/2026', 'FIFA2030', 'Casablanca',
+  'DROP 01', 'INNER CODE ACCESS', 'WHITELIST ONLY', 'SIGNAL DETECTED', 'CODE UNLOCKED', 'ACCESS PENDING',
+  'THE FIRST CHAPTER', 'NO RESTOCK', 'MEMBERS ONLY', 'TIME IS CLOSE', 'THE CODE KNOWS',
+] as const
+
+const STATUS_VALUES: Record<string, string[]> = {
+  en: ['SIGNAL DETECTED', 'ACCESS PENDING', 'CODE UNLOCKED', 'WHITELIST ONLY', 'MEMBERS ONLY', 'TIME IS CLOSE'],
+  fr: ['SIGNAL DÉTECTÉ', 'ACCÈS EN ATTENTE', 'CODE DÉVERROUILLÉ', 'LISTE BLANCHE UNIQUEMENT', 'MEMBRES UNIQUEMENT', 'LE MOMENT APPROCHE'],
+  ar: ['تم رصد الإشارة', 'الوصول قيد الانتظار', 'تم فتح الرمز', 'للقائمة البيضاء فقط', 'للأعضاء فقط', 'الوقت يقترب'],
+  es: ['SEÑAL DETECTADA', 'ACCESO PENDIENTE', 'CÓDIGO DESBLOQUEADO', 'SOLO LISTA BLANCA', 'SOLO MIEMBROS', 'EL MOMENTO SE ACERCA'],
+  de: ['SIGNAL ERKANNT', 'ZUGANG AUSSTEHEND', 'CODE ENTSCHLÜSSELT', 'NUR WHITELIST', 'NUR MITGLIEDER', 'DIE ZEIT IST NAH'],
+  it: ['SEGNALE RILEVATO', 'ACCESSO IN ATTESA', 'CODICE SBLOCCATO', 'SOLO WHITELIST', 'SOLO MEMBRI', 'IL MOMENTO SI AVVICINA'],
+  pt: ['SINAL DETETADO', 'ACESSO PENDENTE', 'CÓDIGO DESBLOQUEADO', 'APENAS WHITELIST', 'APENAS MEMBROS', 'O MOMENTO SE APROXIMA'],
+  nl: ['SIGNAAL GEDETECTEERD', 'TOEGANG IN AFWACHTING', 'CODE ONTGRENDELD', 'ALLEEN WHITELIST', 'ALLEEN LEDEN', 'DE TIJD NADERT'],
+  tr: ['SİNYAL ALGILANDI', 'ERİŞİM BEKLİYOR', 'KOD AÇILDI', 'SADECE WHITELIST', 'SADECE ÜYELER', 'ZAMAN YAKIN'],
+  zh: ['检测到信号', '访问待定', '代码已解锁', '仅限白名单', '仅限会员', '时间将近'],
+  ja: ['シグナル検出', 'アクセス保留中', 'コード解除', 'ホワイトリスト限定', 'メンバー限定', '時が近づく'],
+  ru: ['СИГНАЛ ОБНАРУЖЕН', 'ДОСТУП ОЖИДАЕТСЯ', 'КОД РАЗБЛОКИРОВАН', 'ТОЛЬКО WHITELIST', 'ТОЛЬКО УЧАСТНИКИ', 'ВРЕМЯ БЛИЗКО'],
+}
+
+function nextDelay() {
+  return 2000 + Math.floor(Math.random() * 1501)
 }
 
 export function Countdown() {
   const { locale } = useLocale()
-  const target = new Date(DROP_DATE).getTime()
-  const [time, setTime] = useState<ReturnType<typeof getRemaining> | null>(null)
+  const [valueIndex, setValueIndex] = useState(0)
+  const [statusIndex, setStatusIndex] = useState(0)
 
   useEffect(() => {
-    setTime(getRemaining(target))
-    const id = setInterval(() => setTime(getRemaining(target)), 1000)
-    return () => clearInterval(id)
-  }, [target])
+    let timeout: ReturnType<typeof setTimeout>
+    const schedule = () => {
+      timeout = setTimeout(() => {
+        setValueIndex((current) => (current + 1) % SIGNAL_VALUES.length)
+        schedule()
+      }, nextDelay())
+    }
+    schedule()
+    return () => clearTimeout(timeout)
+  }, [])
 
-  const labels: Record<string, [string, string, string, string]> = {
-    en: ['DAYS', 'HOURS', 'MINUTES', 'SECONDS'], fr: ['JOURS', 'HEURES', 'MINUTES', 'SECONDES'], ar: ['أيام', 'ساعات', 'دقائق', 'ثوانٍ'], es: ['DÍAS', 'HORAS', 'MINUTOS', 'SEGUNDOS'], de: ['TAGE', 'STUNDEN', 'MINUTEN', 'SEKUNDEN'], it: ['GIORNI', 'ORE', 'MINUTI', 'SECONDI'], pt: ['DIAS', 'HORAS', 'MINUTOS', 'SEGUNDOS'], nl: ['DAGEN', 'UREN', 'MINUTEN', 'SECONDEN'], tr: ['GÜN', 'SAAT', 'DAKİKA', 'SANİYE'], zh: ['天', '小时', '分钟', '秒'], ja: ['日', '時間', '分', '秒'], ru: ['ДНИ', 'ЧАСЫ', 'МИНУТЫ', 'СЕКУНДЫ'],
-  }
-  const units = [time?.days, time?.hours, time?.minutes, time?.seconds].map((value, index) => ({ label: labels[locale][index], value: value === undefined ? '--' : String(value).padStart(2, '0') }))
+  useEffect(() => {
+    const id = setInterval(() => setStatusIndex((current) => (current + 1) % 6), 3200)
+    return () => clearInterval(id)
+  }, [])
+
+  const value = SIGNAL_VALUES[valueIndex]
+  const statuses = STATUS_VALUES[locale] ?? STATUS_VALUES.en
+  const isArabic = /[\u0600-\u06FF]/.test(value)
 
   return (
-    <section className="relative border-y border-border bg-secondary/40 py-24 sm:py-32">
-      <div className="mx-auto max-w-4xl px-5 text-center sm:px-8">
+    <section className="relative overflow-hidden border-y border-border bg-[#080807] py-24 text-[#eee7d9] sm:py-32">
+      <div className="pointer-events-none absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(194,166,111,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(194,166,111,0.06)_1px,transparent_1px)] [background-size:72px_72px]" />
+      <div className="relative mx-auto max-w-5xl px-5 text-center sm:px-8">
         <Reveal>
-          <span className="font-sans text-[0.65rem] tracking-luxury text-primary">
-            DROP 01 — AUGUST 2026
-          </span>
-          <h2 className="mt-6 font-serif text-4xl text-foreground sm:text-5xl">
-            The Countdown Has Begun
-          </h2>
+          <span className="font-sans text-[0.65rem] tracking-luxury text-[#c2a66f]">DROP 01</span>
+          <h2 className="mt-5 font-serif text-3xl text-[#eee7d9] sm:text-5xl">THE FIRST CHAPTER</h2>
         </Reveal>
 
         <Reveal delay={0.12}>
-          <div className="mx-auto mt-10 max-w-5xl">
-            <CountdownScene items={units} />
-            <div className="grid grid-cols-4 gap-2 sm:gap-6" aria-label="Countdown">
-              {units.map(({ label, value }) => (
-                <div key={label} className="border border-border bg-background py-3 sm:py-4">
-                  <span className="font-sans text-xl font-light tabular-nums text-foreground sm:text-3xl">{value}</span>
-                  <span className="mt-2 block font-sans text-[0.5rem] tracking-wide-lux text-foreground/50 sm:text-[0.6rem]">{label}</span>
-                </div>
-              ))}
-            </div>
+          <div className="mx-auto mt-8 max-w-4xl rounded-[2rem] border border-[#a88d5d]/25 bg-black/20 shadow-[0_0_80px_rgba(139,48,38,0.12)]">
+            <CountdownScene value={value} index={valueIndex} isArabic={isArabic} />
+          </div>
+          <div className="mt-7 flex flex-col items-center gap-3 font-sans text-[0.58rem] tracking-[0.32em] text-[#c2a66f] sm:flex-row sm:justify-center sm:gap-8">
+            <span>{statuses[statusIndex]}</span>
+            <span className="hidden h-px w-8 bg-[#a88d5d]/50 sm:block" />
+            <span>{locale === 'ar' ? 'الوصول إلى الرمز الداخلي' : locale === 'fr' ? 'ACCÈS AU CODE INTERNE' : 'INNER CODE ACCESS'}</span>
           </div>
         </Reveal>
       </div>
