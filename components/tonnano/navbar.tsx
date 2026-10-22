@@ -48,7 +48,7 @@ export function Navbar() {
         <ul className="hidden items-center gap-9 md:flex">
           {NAV_LINKS.map((l) => (
             <li key={l.href}>
-              <a href={l.href} className="font-sans text-[0.7rem] tracking-wide-lux text-foreground/70 transition-colors hover:text-foreground">
+              <a href={l.href === '#collection' ? '/bilzerian' : l.href} className="font-sans text-[0.7rem] tracking-wide-lux text-foreground/70 transition-colors hover:text-foreground">
                 {(l.href === '#about' ? messages.nav.about : l.href === '#drop' ? messages.nav.drop : l.href === '#inner-code' ? messages.nav.inner : messages.nav.collection).toUpperCase()}
               </a>
             </li>
