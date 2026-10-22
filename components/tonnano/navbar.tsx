@@ -7,11 +7,13 @@ import { useEffect, useState } from 'react'
 import { NAV_LINKS } from '@/lib/site'
 import { EASE, usePrefersReducedMotion } from './animation'
 import { WhitelistCtaButton } from './whitelist-cta-button'
+import { useLocale } from './locale-provider'
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const prefersReduced = usePrefersReducedMotion()
+  const { messages, locale, setLocale, localeNames } = useLocale()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -46,14 +48,17 @@ export function Navbar() {
         <ul className="hidden items-center gap-9 md:flex">
           {NAV_LINKS.map((l) => (
             <li key={l.href}>
-              <a
-                href={l.href}
-                className="font-sans text-[0.7rem] tracking-wide-lux text-foreground/70 transition-colors hover:text-foreground"
-              >
-                {l.label.toUpperCase()}
+              <a href={l.href} className="font-sans text-[0.7rem] tracking-wide-lux text-foreground/70 transition-colors hover:text-foreground">
+                {(l.href === '#about' ? messages.nav.about : l.href === '#drop' ? messages.nav.drop : l.href === '#inner-code' ? messages.nav.inner : messages.nav.collection).toUpperCase()}
               </a>
             </li>
           ))}
+          <li>
+            <label className="sr-only" htmlFor="language-select">{messages.nav.language}</label>
+            <select id="language-select" value={locale} onChange={(event) => setLocale(event.target.value as typeof locale)} className="bg-transparent font-sans text-[0.65rem] tracking-wide-lux text-foreground/60 outline-none">
+              {Object.entries(localeNames).map(([value, label]) => <option key={value} value={value} className="bg-background text-foreground">{label}</option>)}
+            </select>
+          </li>
         </ul>
 
         <WhitelistCtaButton className="hidden md:inline-block" />
