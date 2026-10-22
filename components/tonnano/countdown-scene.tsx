@@ -1,68 +1,71 @@
 'use client'
 
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Html, OrbitControls } from '@react-three/drei'
+import { Sparkles } from '@react-three/drei'
 import { useRef } from 'react'
-import type { Group } from 'three'
 
-type CountdownValue = { label: string; value: string }
+type SignalSceneProps = { value: string; index: number; isArabic: boolean }
 
-function CountdownTile({ item, index }: { item: CountdownValue; index: number }) {
+function SignalCore({ value, index, isArabic }: SignalSceneProps) {
   const group = useRef<Group>(null)
 
   useFrame(({ clock }) => {
     if (!group.current) return
-    group.current.rotation.y = Math.sin(clock.elapsedTime * 0.35 + index) * 0.045
-    group.current.position.y = Math.sin(clock.elapsedTime * 0.45 + index) * 0.035
+    const t = clock.elapsedTime
+    group.current.rotation.y = Math.sin(t * 0.18) * 0.055
+    group.current.rotation.x = Math.sin(t * 0.14) * 0.018
+    group.current.position.y = Math.sin(t * 0.32) * 0.045
   })
 
   return (
-    <group ref={group} position={[(index - 1.5) * 1.7, 0, 0]}>
-      <mesh castShadow>
-        <boxGeometry args={[1.35, 1.35, 0.22]} />
-        <meshStandardMaterial color="#11100d" metalness={0.78} roughness={0.3} />
+    <group ref={group} key={`${value}-${index}`}>
+      <mesh rotation={[0, 0, Math.PI / 2]}>
+        <torusGeometry args={[1.72, 0.006, 8, 96]} />
+        <meshBasicMaterial color="#9f8965" transparent opacity={0.42} />
       </mesh>
-      <mesh position={[0, 0, 0.13]}>
-        <boxGeometry args={[1.16, 1.16, 0.025]} />
-        <meshStandardMaterial color="#1b1915" metalness={0.55} roughness={0.42} />
+      <mesh rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[1.34, 0.004, 8, 96]} />
+        <meshBasicMaterial color="#d7c29a" transparent opacity={0.2} />
       </mesh>
-      <Html center position={[0, 0.08, 0.17]} transform distanceFactor={2.4}>
-        <div className="pointer-events-none w-24 text-center text-[#ede6d8]">
-          <div className="font-sans text-[2.25rem] font-light leading-none tabular-nums tracking-tight">{item.value}</div>
-          <div className="mt-2 text-[0.45rem] tracking-[0.22em] text-[#b6a47e]">{item.label}</div>
-        </div>
-      </Html>
+      <mesh position={[0, 0, -0.12]}>
+        <planeGeometry args={[4.8, 1.2]} />
+        <meshBasicMaterial color="#0e0d0b" transparent opacity={0.72} />
+      </mesh>
     </group>
   )
 }
 
-function Scene({ items }: { items: CountdownValue[] }) {
+function Scene({ value, index, isArabic }: SignalSceneProps) {
   const group = useRef<Group>(null)
-  useFrame(({ clock }) => {
-    if (group.current) group.current.rotation.y = Math.sin(clock.elapsedTime * 0.14) * 0.06
+  useFrame(({ clock, pointer }) => {
+    if (!group.current) return
+    group.current.rotation.y += (pointer.x * 0.045 - group.current.rotation.y) * 0.02
+    group.current.rotation.x += (-pointer.y * 0.025 - group.current.rotation.x) * 0.02
+    group.current.rotation.z = Math.sin(clock.elapsedTime * 0.1) * 0.008
   })
+
   return (
-    <group ref={group} rotation-x={-0.04}>
-      <ambientLight intensity={0.35} />
-      <directionalLight position={[-3, 4, 5]} intensity={1.2} color="#f1e4c8" />
-      <pointLight position={[3, 1, 3]} intensity={1.5} distance={8} color="#9b835b" />
-      {items.map((item, index) => <CountdownTile key={item.label} item={item} index={index} />)}
+    <group ref={group}>
+      <ambientLight intensity={0.28} />
+      <pointLight position={[-3, 2, 4]} intensity={2.2} distance={8} color="#e4c995" />
+      <pointLight position={[3, -1, 2]} intensity={1.1} distance={7} color="#8b3026" />
+      <SignalCore value={value} index={index} isArabic={isArabic} />
+      <Sparkles count={48} scale={[5.4, 2.5, 2]} size={0.7} speed={0.12} opacity={0.28} color="#cdb27a" />
     </group>
   )
 }
 
-export function CountdownScene({ items }: { items: CountdownValue[] }) {
+export function CountdownScene({ value, index, isArabic }: SignalSceneProps) {
   return (
-    <div className="h-[180px] w-full sm:h-[250px]" aria-hidden="true">
-      <Canvas
-        camera={{ position: [0, 0.1, 7.4], fov: 28 }}
-        dpr={[1, 1.5]}
-        gl={{ antialias: true, powerPreference: 'high-performance', alpha: true }}
-        fallback={<div className="h-full w-full" />}
-      >
-        <Scene items={items} />
-        <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
+    <div className="relative h-[210px] w-full sm:h-[290px]" aria-hidden="true">
+      <Canvas camera={{ position: [0, 0, 7], fov: 28 }} dpr={[1, 1.35]} gl={{ antialias: true, powerPreference: 'high-performance', alpha: true }} fallback={<div className="h-full w-full" />}>
+        <Scene value={value} index={index} isArabic={isArabic} />
       </Canvas>
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-6">
+        <div key={`${value}-${index}`} className={`max-w-[min(76vw,34rem)] text-center text-[clamp(1.35rem,4.5vw,3.5rem)] font-light leading-tight tracking-[0.08em] text-[#eee7d9] drop-shadow-[0_0_18px_rgba(220,197,150,0.18)] ${isArabic ? 'font-serif' : ''}`} dir={isArabic ? 'rtl' : 'ltr'}>
+          {value}
+        </div>
+      </div>
     </div>
   )
 }
