@@ -1,60 +1,48 @@
 'use client'
 
-import { INSTAGRAM_URL } from '@/lib/site'
-import { useLocale } from './locale-provider'
+import { IMAGES, INSTAGRAM_URL } from '@/lib/site'
+import { AtSign as InstagramIcon } from 'lucide-react'
+import Image from 'next/image'
+import { Reveal } from './reveal'
 
-export function Footer() {
-  const { messages: m } = useLocale()
+export function Instagram() {
   return (
-    <footer className="border-t border-border bg-background">
-      <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20">
-        <div className="flex flex-col items-center gap-10 text-center md:flex-row md:items-start md:justify-between md:text-left">
-          <div>
-            <p className="font-sans text-xl tracking-luxury text-primary">
-              TONNANO
-            </p>
-            <p className="mt-4 font-sans text-[0.65rem] tracking-wide-lux text-foreground/45">
-              EST. 2026 — MADE IN MOROCCO
-            </p>
-            <p className="mt-2 font-serif text-base italic text-foreground/70">
-              Time Builds Legends
-            </p>
-          </div>
+    <section className="relative overflow-hidden">
+      <div className="absolute inset-0">
+        <Image
+          src={IMAGES.snakeDuoMarble || '/placeholder.svg'}
+          alt="TONNANO Snake collection editorial against marble"
+          fill
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-background/80" />
+      </div>
 
-          <nav className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-            {[
-              { label: 'About', href: '#about' },
-              { label: 'Collection', href: '#collection' },
-              { label: 'Whitelist', href: '#whitelist' },
-              { label: 'Privacy Policy', href: '#' },
-              { label: 'Terms', href: '#' },
-              { label: 'Contact', href: INSTAGRAM_URL },
-            ].map((l) => (
-              <a
-                key={l.label}
-                href={l.href}
-                className="font-sans text-[0.65rem] tracking-wide-lux text-foreground/55 transition-colors hover:text-foreground"
-              >
-                {l.label.toUpperCase()}
-              </a>
-            ))}
-          </nav>
-
+      <div className="relative mx-auto max-w-3xl px-5 py-24 text-center sm:px-8 sm:py-32">
+        <Reveal>
+          <span className="font-sans text-[0.65rem] tracking-luxury text-primary">
+            @tonnano.official
+          </span>
+          <h2 className="mt-6 font-serif text-4xl text-foreground sm:text-6xl">
+            Follow The Story
+          </h2>
+          <p className="mx-auto mt-5 max-w-md font-sans text-sm leading-relaxed text-foreground/65">
+            Be the first to witness each chapter unfold. Campaign films,
+            behind-the-craft and members-only moments.
+          </p>
           <a
             href={INSTAGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-sans text-[0.65rem] tracking-wide-lux text-primary transition-colors hover:text-foreground"
+            className="mt-10 inline-flex items-center gap-3 border border-primary bg-primary px-9 py-4 font-sans text-[0.7rem] tracking-wide-lux text-primary-foreground transition-all duration-300 hover:translate-y-[-1px] hover:bg-primary/90"
           >
-            INSTAGRAM
+            <InstagramIcon className="h-4 w-4" strokeWidth={1.4} />
+            FOLLOW TONNANO
           </a>
-        </div>
-
-        <div className="mt-14 hairline" />
-        <p className="mt-8 text-center font-sans text-[0.6rem] tracking-wide-lux text-foreground/35">
-          © 2026 TONNANO. ALL RIGHTS RESERVED. CRAFTED FOR THE FEW.
-        </p>
+        </Reveal>
       </div>
-    </footer>
+    </section>
   )
 }
+
