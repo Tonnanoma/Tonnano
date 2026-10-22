@@ -96,8 +96,7 @@ export function Collection() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="max-w-sm font-sans text-sm leading-relaxed text-foreground/60">
-              Front, back, embroidery and inside label. Every garment studied
-              like an object in a collection. Select a piece to view it closer.
+              {m.collection.description}
             </p>
           </Reveal>
         </div>
@@ -134,7 +133,7 @@ export function Collection() {
                     </p>
                   </div>
                   <span className="font-sans text-[0.6rem] tracking-wide-lux text-primary opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                    VIEW
+                    {m.collection.view}
                   </span>
                 </div>
               </button>

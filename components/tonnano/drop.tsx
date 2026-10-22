@@ -39,7 +39,7 @@ export function Drop() {
         </Reveal>
         <Reveal delay={0.1}>
           <h2 className="mt-6 font-serif text-6xl text-foreground sm:text-8xl">
-            Drop 01
+            {m.nav.drop}
           </h2>
         </Reveal>
         <Reveal delay={0.15}>
@@ -60,7 +60,7 @@ export function Drop() {
 
         <Reveal delay={0.36}>
           <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
-            {['No Restocks', 'Limited Quantities', 'Reserved For The Few'].map(
+            {[m.drop.noRestocks, m.drop.limitedQuantities, m.drop.reserved].map(
               (t) => (
                 <span
                   key={t}

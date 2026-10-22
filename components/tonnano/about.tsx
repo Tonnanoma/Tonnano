@@ -36,9 +36,9 @@ export function About() {
           </div>
           <div className="mt-10 flex flex-wrap gap-x-10 gap-y-5">
             {[
-              ['Made in', 'Morocco'],
-              ['Production', 'Limited'],
-              ['Design', 'Timeless'],
+              [m.about.made, m.about.morocco],
+              [m.about.production, m.about.limited],
+              [m.about.design, m.about.timeless],
             ].map(([k, v]) => (
               <div key={k}>
                 <p className="font-sans text-[0.6rem] tracking-wide-lux text-foreground/45">

@@ -6,10 +6,29 @@ import { CountdownScene } from './countdown-scene'
 import { useLocale } from './locale-provider'
 
 const SIGNAL_VALUES = [
-  '﷽', 'LYOUM 9BEL GHEDA', 'Morocco', 'مُبَاشَرَةً مِنْ مَدِينَةِ الْمُحَمَّدِيَّة', '12/11/2026',
-  'ZARIRY', "Le Serpent d'Airain", 'BIENTÔT', 'Palestine', '12/12/2026', 'FIFA2030', 'Casablanca',
-  'DROP 01', 'INNER CODE ACCESS', 'WHITELIST ONLY', 'SIGNAL DETECTED', 'CODE UNLOCKED', 'ACCESS PENDING',
-  'THE FIRST CHAPTER', 'NO RESTOCK', 'MEMBERS ONLY', 'TIME IS CLOSE', 'THE CODE KNOWS',
+  'بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ',
+  'FEDALA',
+  'LYOUM 9BEL GHEDA',
+  'Morocco',
+  'مُبَاشَرَةً مِنْ مَدِينَةِ الْمُحَمَّدِيَّة',
+  'ZARIRY 🐉 🦁',
+  'ٱللَّهُ أَكْبَرُ',
+  'بسم الله الرحمن الرحيم',
+  'PALESTINE فِلَسْطِين',
+  '12/12/2026',
+  'FIFA2030',
+  'Casablanca',
+  'DROP 01',
+  'INNER CODE ACCESS',
+  'Marrakech',
+  'SIGNAL DETECTED',
+  'CODE UNLOCKED',
+  'ACCESS PENDING',
+  'THE FIRST CHAPTER',
+  'NO RESTOCK',
+  'MEMBERS ONLY',
+  'TIME IS CLOSE',
+  'THE CODE KNOWS',
 ] as const
 
 const STATUS_VALUES: Record<string, string[]> = {
@@ -73,7 +92,7 @@ export function Countdown() {
           <div className="mt-7 flex flex-col items-center gap-3 font-sans text-[0.58rem] tracking-[0.32em] text-[#c2a66f] sm:flex-row sm:justify-center sm:gap-8">
             <span>{statuses[statusIndex]}</span>
             <span className="hidden h-px w-8 bg-[#a88d5d]/50 sm:block" />
-            <span>{locale === 'ar' ? 'الوصول إلى الرمز الداخلي' : locale === 'fr' ? 'ACCÈS AU CODE INTERNE' : 'INNER CODE ACCESS'}</span>
+            <span>{m.nav.inner}</span>
           </div>
         </Reveal>
       </div>
