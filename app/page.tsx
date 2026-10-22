@@ -9,10 +9,11 @@ import { InnerCode } from '@/components/tonnano/inner-code'
 import { Instagram } from '@/components/tonnano/instagram'
 import { Navbar } from '@/components/tonnano/navbar'
 import { Whitelist } from '@/components/tonnano/whitelist'
+import { LocaleProvider } from '@/components/tonnano/locale-provider'
 
 export default function Page() {
   return (
-    <Experience>
+    <LocaleProvider><Experience>
       <Navbar />
       <main className="bg-background">
         <Hero />
@@ -25,6 +26,6 @@ export default function Page() {
         <Instagram />
       </main>
       <Footer />
-    </Experience>
+    </Experience></LocaleProvider>
   )
 }
