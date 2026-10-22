@@ -5,8 +5,10 @@ import { motion, useScroll, useTransform } from 'motion/react'
 import Image from 'next/image'
 import { useRef } from 'react'
 import { Reveal } from './reveal'
+import { useLocale } from './locale-provider'
 
 export function Drop() {
+  const { messages: m } = useLocale()
   const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -32,7 +34,7 @@ export function Drop() {
       <div className="relative mx-auto max-w-3xl px-5 py-28 text-center sm:px-8 sm:py-44">
         <Reveal>
           <span className="font-sans text-[0.65rem] tracking-luxury text-primary">
-            THE FIRST CHAPTER
+            {m.drop.eyebrow}
           </span>
         </Reveal>
         <Reveal delay={0.1}>
@@ -42,19 +44,17 @@ export function Drop() {
         </Reveal>
         <Reveal delay={0.15}>
           <p className="mt-3 font-sans text-sm tracking-luxury text-foreground/70">
-            AUGUST 2026
+            {m.drop.month}
           </p>
         </Reveal>
         <Reveal delay={0.2}>
           <p className="mx-auto mt-10 max-w-xl font-sans text-sm leading-relaxed text-foreground/70 sm:text-base">
-            The first chapter of TONNANO begins with a carefully curated
-            collection of premium oversized essentials. Every piece is produced
-            in limited quantities. No restocks. No mass production.
+            {m.drop.body}
           </p>
         </Reveal>
         <Reveal delay={0.28}>
           <p className="mx-auto mt-6 max-w-xl font-serif text-lg italic text-foreground/85 sm:text-xl">
-            Once sold out, this chapter will never return.
+            {m.drop.quote}
           </p>
         </Reveal>
 

@@ -4,9 +4,11 @@ import { IMAGES } from '@/lib/site'
 import { motion, useScroll, useTransform } from 'motion/react'
 import Image from 'next/image'
 import { useRef } from 'react'
+import { useLocale } from './locale-provider'
 import { Reveal } from './reveal'
 
 export function About() {
+  const { messages: m } = useLocale()
   const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -19,23 +21,17 @@ export function About() {
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:gap-20">
         <Reveal className="order-2 lg:order-1">
           <span className="font-sans text-[0.65rem] tracking-luxury text-primary">
-            THE PHILOSOPHY
+            {m.about.eyebrow}
           </span>
           <h2 className="mt-6 font-serif text-4xl leading-tight text-foreground text-balance sm:text-5xl lg:text-6xl">
-            More Than A T-Shirt
+            {m.about.title}
           </h2>
           <div className="mt-8 space-y-6 font-sans text-sm leading-relaxed text-foreground/70 sm:text-base">
             <p>
-              TONNANO is currently opening access to its founding members ahead
-              of the official August Drop. Joining the whitelist is not simply
-              reserving a garment — it is becoming part of the TONNANO story
-              from day one.
+              {m.about.p1}
             </p>
             <p>
-              Every piece is designed with premium heavyweight cotton, refined
-              construction and timeless design. Built around quality rather than
-              quantity, created for those who appreciate craftsmanship and
-              understated luxury.
+              {m.about.p2}
             </p>
           </div>
           <div className="mt-10 flex flex-wrap gap-x-10 gap-y-5">
