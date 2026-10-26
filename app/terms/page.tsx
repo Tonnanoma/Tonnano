@@ -1,0 +1,2 @@
+export const metadata = { title: 'Terms and Conditions' }
+export default function Page() { return <main className="min-h-screen bg-background px-5 pb-24 pt-36 sm:px-8"><article className="mx-auto max-w-3xl"><h1 className="font-serif text-6xl">TERMS</h1><p className="mt-8 text-sm leading-8 text-foreground/65">This page is a placeholder for TONNANO’s terms and conditions. Replace this text with your final terms covering orders, access, returns, intellectual property and contact details.</p></article></main> }

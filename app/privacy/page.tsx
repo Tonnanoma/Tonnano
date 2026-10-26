@@ -1,0 +1,2 @@
+export const metadata = { title: 'Privacy Policy' }
+export default function Page() { return <main className="min-h-screen bg-background px-5 pb-24 pt-36 sm:px-8"><article className="mx-auto max-w-3xl"><h1 className="font-serif text-6xl">PRIVACY</h1><p className="mt-8 text-sm leading-8 text-foreground/65">This page is a placeholder for TONNANO’s privacy policy. Replace this text with your final policy covering information collected, usage, retention, rights and contact details.</p></article></main> }

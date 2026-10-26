@@ -40,7 +40,14 @@ export const IMAGES = {
     'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260625-WA0016%281%29-NKqp1NbmhRPVz6Snwsv9Cm1yQJgWm8.jpg',
 } as const
 
-export const INSTAGRAM_URL = 'https://www.instagram.com/tonnanoma/'
+export const INSTAGRAM_URL = 'https://instagram.com/tonnano.official'
+export const FACEBOOK_URL = 'https://www.facebook.com/tonnanomorocco'
+export const LINKEDIN_URL = 'https://linkedin.com/company/tonnanomorocco'
+export const SOCIAL_LINKS = {
+  instagram: INSTAGRAM_URL,
+  facebook: FACEBOOK_URL,
+  linkedin: LINKEDIN_URL,
+} as const
 
 // Drop date — August 2026
 export const DROP_DATE = '2026-08-01T12:00:00Z'

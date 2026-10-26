@@ -1,0 +1,2 @@
+export const metadata = { title: 'Contact TONNANO', description: 'Contact TONNANO.' }
+export default function Page() { return <main className="min-h-screen bg-background px-5 pb-24 pt-36 sm:px-8"><div className="mx-auto max-w-3xl"><p className="text-[0.65rem] tracking-luxury text-primary">TONNANO / CONTACT</p><h1 className="mt-7 font-serif text-6xl">GET IN TOUCH.</h1><a href="mailto:hello@tonnano.com" className="mt-10 inline-block border-b border-primary pb-2 text-sm text-primary">hello@tonnano.com</a></div></main> }
