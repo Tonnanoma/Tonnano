@@ -16,7 +16,7 @@ const cormorant = Cormorant_Garamond({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://tonnano.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://tonnano.vercel.app'),
   title: {
     default: 'TONNANO — Time Builds Legends',
     template: '%s · TONNANO',

@@ -7,7 +7,7 @@ import { useRef } from 'react'
 type SignalSceneProps = { value: string; index: number; isArabic: boolean }
 
 function SignalCore({ value, index, isArabic }: SignalSceneProps) {
-  const group = useRef<Group>(null)
+  const group = useRef<any>(null)
 
   useFrame(({ clock }) => {
     if (!group.current) return
@@ -36,7 +36,7 @@ function SignalCore({ value, index, isArabic }: SignalSceneProps) {
 }
 
 function Scene({ value, index, isArabic }: SignalSceneProps) {
-  const group = useRef<Group>(null)
+  const group = useRef<any>(null)
   useFrame(({ clock, pointer }) => {
     if (!group.current) return
     group.current.rotation.y += (pointer.x * 0.045 - group.current.rotation.y) * 0.02

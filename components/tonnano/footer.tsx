@@ -1,11 +1,11 @@
 'use client'
 
 import { IMAGES, INSTAGRAM_URL } from '@/lib/site'
-import { AtSign as InstagramIcon } from 'lucide-react'
+import { Link2 as InstagramIcon } from 'lucide-react'
 import Image from 'next/image'
 import { Reveal } from './reveal'
 
-export function Instagram() {
+export function Footer() {
   return (
     <section className="relative overflow-hidden">
       <div className="absolute inset-0">

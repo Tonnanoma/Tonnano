@@ -77,21 +77,29 @@ export function Countdown() {
   const isArabic = /[\u0600-\u06FF]/.test(value)
 
   return (
-    <section className="relative overflow-hidden border-y border-border bg-[#080807] py-24 text-[#eee7d9] sm:py-32">
-      <div className="pointer-events-none absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(194,166,111,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(194,166,111,0.06)_1px,transparent_1px)] [background-size:72px_72px]" />
-      <div className="relative mx-auto max-w-5xl px-5 text-center sm:px-8">
+    <section className="countdown-vault relative overflow-hidden border-y border-[#b79b6b]/20 bg-[#0a0a0a] py-20 text-[#eee7d9] sm:py-32">
+      <div className="countdown-vault__beam pointer-events-none absolute inset-y-0 left-1/2 w-1/3 -translate-x-1/2" />
+      <div className="countdown-vault__grain pointer-events-none absolute inset-0" />
+      <div className="relative mx-auto max-w-5xl px-4 text-center sm:px-8">
+        <div className="countdown-vault__frame pointer-events-none absolute inset-x-4 top-0 bottom-0 border border-[#b79b6b]/40 sm:inset-x-8" aria-hidden="true">
+          <span className="absolute -left-px -top-px h-8 w-8 border-l border-t border-[#b79b6b]" />
+          <span className="absolute -right-px -top-px h-8 w-8 border-r border-t border-[#b79b6b]" />
+          <span className="absolute -bottom-px -left-px h-8 w-8 border-b border-l border-[#b79b6b]" />
+          <span className="absolute -bottom-px -right-px h-8 w-8 border-b border-r border-[#b79b6b]" />
+        </div>
         <Reveal>
-          <span className="font-sans text-[0.65rem] tracking-luxury text-[#c2a66f]">{m.drop.eyebrow}</span>
-          <h2 className="mt-5 font-serif text-3xl text-[#eee7d9] sm:text-5xl">{m.drop.eyebrow}</h2>
+          <span className="relative font-sans text-[0.6rem] tracking-luxury text-[#b79b6b]">{m.drop.eyebrow}</span>
+          <h2 className="relative mt-5 font-serif text-3xl text-[#eee7d9] sm:text-5xl">{m.drop.eyebrow}</h2>
         </Reveal>
 
         <Reveal delay={0.12}>
-          <div className="mx-auto mt-8 max-w-4xl rounded-[2rem] border border-[#a88d5d]/25 bg-black/20 shadow-[0_0_80px_rgba(139,48,38,0.12)]">
+          <div className="countdown-vault__panel relative mx-auto mt-8 max-w-4xl border border-white/10 bg-white/[0.025] shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur-sm">
+            <div className="countdown-vault__hairline absolute left-1/2 top-0 h-full w-px bg-[#b79b6b]/40 sm:hidden" aria-hidden="true" />
             <CountdownScene value={value} index={valueIndex} isArabic={isArabic} />
           </div>
-          <div className="mt-7 flex flex-col items-center gap-3 font-sans text-[0.58rem] tracking-[0.32em] text-[#c2a66f] sm:flex-row sm:justify-center sm:gap-8">
+          <div className="relative mt-7 flex flex-col items-center gap-3 font-sans text-[0.58rem] tracking-[0.32em] text-[#b79b6b] sm:flex-row sm:justify-center sm:gap-8" aria-live="polite">
             <span>{statuses[statusIndex]}</span>
-            <span className="hidden h-px w-8 bg-[#a88d5d]/50 sm:block" />
+            <span className="hidden h-px w-8 bg-[#b79b6b]/50 sm:block" />
             <span>{m.nav.inner}</span>
           </div>
         </Reveal>

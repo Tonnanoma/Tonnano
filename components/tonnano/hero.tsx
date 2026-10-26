@@ -80,9 +80,9 @@ export function Hero() {
         <motion.div
           className="mt-10 will-change-transform"
           variants={fadeUp(14)}
-          transition={{ duration: 0.56, ease: EASE as any, delay: 0.58 }}
           {...(!reduced ? hoverProps({ scale: 1.01 }) : {})}
           {...(!reduced ? tapProps() : {})}
+          transition={{ duration: 0.56, ease: EASE as any, delay: 0.58 }}
         >
           <WhitelistCtaButton
             variant="solid"

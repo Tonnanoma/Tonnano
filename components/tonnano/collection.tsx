@@ -96,7 +96,7 @@ export function Collection() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="max-w-sm font-sans text-sm leading-relaxed text-foreground/60">
-              {m.collection.description}
+              {'description' in m.collection ? String(m.collection.description) : m.collection.body}
             </p>
           </Reveal>
         </div>

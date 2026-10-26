@@ -1,16 +1,16 @@
 'use client'
 
-import { Facebook, Instagram, Linkedin } from 'lucide-react'
+import { Link2 } from 'lucide-react'
 import { FACEBOOK_URL, INSTAGRAM_URL, LINKEDIN_URL } from '@/lib/site'
 import { useLocale } from './locale-provider'
 
 const socialLinks = [
-  { label: 'Instagram', href: INSTAGRAM_URL, icon: Instagram },
-  { label: 'Facebook', href: FACEBOOK_URL, icon: Facebook },
-  { label: 'LinkedIn', href: LINKEDIN_URL, icon: Linkedin },
+  { label: 'Instagram', href: INSTAGRAM_URL, icon: Link2 },
+  { label: 'Facebook', href: FACEBOOK_URL, icon: Link2 },
+  { label: 'LinkedIn', href: LINKEDIN_URL, icon: Link2 },
 ]
 
-export function Footer() {
+export function Instagram() {
   const { messages: m } = useLocale()
 
   return (
