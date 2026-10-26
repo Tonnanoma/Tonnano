@@ -17,7 +17,7 @@ export function About() {
   const y = useTransform(scrollYProgress, [0, 1], ['-8%', '8%'])
 
   return (
-    <section id="about" className="relative bg-background py-24 sm:py-36">
+    <section id="about" ref={ref} className="relative bg-background py-24 sm:py-36">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:gap-20">
         <Reveal className="order-2 lg:order-1">
           <span className="font-sans text-[0.65rem] tracking-luxury text-primary">

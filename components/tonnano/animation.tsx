@@ -99,17 +99,15 @@ export const floating = (amplitude = 6, duration = 4) => {
 }
 
 // Parallax helper using motion/react's useScroll/useTransform
-export function useParallax(ref: RefObject<Element>, range: [number, number] = [0, 20]) {
+export function useParallax(ref: RefObject<HTMLElement | null>, range: [number, number] = [0, 20]) {
   const prefersReduced = usePrefersReducedMotion()
-  if (prefersReduced) return { y: '0%' }
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+  const y = useTransform(scrollYProgress, [0, 1], [`${range[0]}%`, `${range[1]}%`])
 
-  try {
-    const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
-    const y = useTransform(scrollYProgress, [0, 1], [`${range[0]}%`, `${range[1]}%`])
-    return { y }
-  } catch {
-    return { y: '0%' }
-  }
+  return prefersReduced ? { y: '0%' } : { y }
 }
 
 // Magnetic effect: use on a button/card to slightly follow cursor

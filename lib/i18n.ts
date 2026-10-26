@@ -18,4 +18,7 @@ export const rtlLocales: Locale[] = ['ar']
 export const messages = { en, fr, ar, es, de, it, pt, nl, tr, zh, ja, ru } as const
 export type Messages = typeof en
 export function isLocale(value: string): value is Locale { return locales.includes(value as Locale) }
-export function getMessages(locale: Locale) { return { ...en, ...messages[locale], bilzerian: messages[locale].bilzerian ?? en.bilzerian } }
+export function getMessages(locale: Locale): Messages {
+  const localeMessages = messages[locale] as Partial<Messages>
+  return { ...en, ...localeMessages, bilzerian: localeMessages.bilzerian ?? en.bilzerian } as Messages
+}
