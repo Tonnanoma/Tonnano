@@ -61,12 +61,6 @@ export function Navbar() {
           </li>
         </ul>
 
-        <div className="hidden items-center gap-3 md:flex" aria-label="Social links">
-          <a href="https://www.instagram.com/tonnano.official/" target="_blank" rel="noopener noreferrer" aria-label="TONNANO on Instagram" className="text-foreground/60 transition-colors hover:text-primary"><span className="text-xs font-semibold">◎</span></a>
-          <a href="https://www.facebook.com/tonnanomorocco" target="_blank" rel="noopener noreferrer" aria-label="TONNANO on Facebook" className="text-foreground/60 transition-colors hover:text-primary"><span className="text-xs font-semibold">f</span></a>
-          <a href="https://www.linkedin.com/company/tonnanomorocco" target="_blank" rel="noopener noreferrer" aria-label="TONNANO on LinkedIn" className="text-foreground/60 transition-colors hover:text-primary"><span className="text-[0.65rem] font-semibold">in</span></a>
-        </div>
-
         <WhitelistCtaButton className="hidden md:inline-block" />
 
         <button

@@ -1,20 +1,16 @@
 'use client'
 
-import type { ComponentType } from 'react'
+import { Facebook, Instagram, Linkedin } from 'lucide-react'
 import { FACEBOOK_URL, INSTAGRAM_URL, LINKEDIN_URL } from '@/lib/site'
 import { useLocale } from './locale-provider'
 
-function SocialMark({ label, className }: { label: string; className?: string }) {
-  return <span className={`font-sans text-xs font-semibold ${className ?? ''}`}>{label}</span>
-}
-
 const socialLinks = [
-  { label: 'Instagram', href: INSTAGRAM_URL, icon: () => <SocialMark label="◎" /> },
-  { label: 'Facebook', href: FACEBOOK_URL, icon: () => <SocialMark label="f" /> },
-  { label: 'LinkedIn', href: LINKEDIN_URL, icon: () => <SocialMark label="in" /> },
+  { label: 'Instagram', href: INSTAGRAM_URL, icon: Instagram },
+  { label: 'Facebook', href: FACEBOOK_URL, icon: Facebook },
+  { label: 'LinkedIn', href: LINKEDIN_URL, icon: Linkedin },
 ]
 
-export function Instagram() {
+export function Footer() {
   const { messages: m } = useLocale()
 
   return (
@@ -60,7 +56,7 @@ export function Instagram() {
                 aria-label={label}
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-foreground/75 transition-colors hover:border-primary/60 hover:text-primary"
               >
-                <Icon />
+                <Icon className="h-4 w-4" strokeWidth={1.8} />
               </a>
             ))}
           </div>

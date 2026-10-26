@@ -1,11 +1,11 @@
 'use client'
 
-import { IMAGES, SOCIAL_LINKS } from '@/lib/site'
+import { IMAGES, INSTAGRAM_URL } from '@/lib/site'
 import { AtSign as InstagramIcon } from 'lucide-react'
 import Image from 'next/image'
 import { Reveal } from './reveal'
 
-export function Footer() {
+export function Instagram() {
   return (
     <section className="relative overflow-hidden">
       <div className="absolute inset-0">
@@ -32,7 +32,7 @@ export function Footer() {
             behind-the-craft and members-only moments.
           </p>
           <a
-            href={SOCIAL_LINKS.instagram}
+            href={INSTAGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-10 inline-flex items-center gap-3 border border-primary bg-primary px-9 py-4 font-sans text-[0.7rem] tracking-wide-lux text-primary-foreground transition-all duration-300 hover:translate-y-[-1px] hover:bg-primary/90"
@@ -40,11 +40,6 @@ export function Footer() {
             <InstagramIcon className="h-4 w-4" strokeWidth={1.4} />
             FOLLOW TONNANO
           </a>
-          <div className="mt-6 flex justify-center gap-5" aria-label="TONNANO social links">
-            <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-foreground/60 transition-colors hover:text-primary"><InstagramIcon className="h-4 w-4" strokeWidth={1.3} /></a>
-            <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-foreground/60 transition-colors hover:text-primary"><span className="font-sans text-xs font-semibold">f</span></a>
-            <a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-foreground/60 transition-colors hover:text-primary"><span className="font-sans text-xs font-semibold">in</span></a>
-          </div>
         </Reveal>
       </div>
     </section>
