@@ -1,3 +1,5 @@
-import { CollectionPage } from '@/components/collection-page'
-export const metadata = { title: 'Bilzerian Collection', description: 'The next TONNANO chapter.' }
-export default function Page() { return <CollectionPage products={[]} title="BILZERIAN" intro="A winter chapter in preparation. Weight, texture and intent — coming soon." comingSoon /> }
+import { BilzerianCollectionPage } from '@/components/bilzerian/collection-page'
+
+export default function BilzerianCollectionRoute() {
+  return <BilzerianCollectionPage />
+}

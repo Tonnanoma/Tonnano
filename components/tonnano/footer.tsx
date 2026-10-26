@@ -4,10 +4,11 @@ import { IMAGES, INSTAGRAM_URL } from '@/lib/site'
 import { Link2 as InstagramIcon } from 'lucide-react'
 import Image from 'next/image'
 import { Reveal } from './reveal'
+import { SocialLinks } from './social-links'
 
 export function Footer() {
   return (
-    <section className="relative overflow-hidden">
+    <footer className="relative overflow-hidden">
       <div className="absolute inset-0">
         <Image
           src={IMAGES.snakeDuoMarble || '/placeholder.svg'}
@@ -40,9 +41,13 @@ export function Footer() {
             <InstagramIcon className="h-4 w-4" strokeWidth={1.4} />
             FOLLOW TONNANO
           </a>
+          <SocialLinks className="mt-7 justify-center" />
+          <nav className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-3 text-[0.65rem] tracking-wide-lux text-foreground/55" aria-label="Footer navigation">
+            <a href="/about" className="hover:text-primary">ABOUT</a><a href="/collection/inner-code" className="hover:text-primary">INNER CODE</a><a href="/collection/bilzerian" className="hover:text-primary">BILZERIAN</a><a href="/membership" className="hover:text-primary">MEMBERSHIP</a><a href="/privacy" className="hover:text-primary">PRIVACY</a><a href="/terms" className="hover:text-primary">TERMS</a><a href="/contact" className="hover:text-primary">CONTACT</a>
+          </nav>
         </Reveal>
       </div>
-    </section>
+    </footer>
   )
 }
 
