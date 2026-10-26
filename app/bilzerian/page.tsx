@@ -1,5 +1,5 @@
-import { BilzerianCollectionPage } from '@/components/bilzerian/collection-page'
+import { permanentRedirect } from 'next/navigation'
 
-export default function BilzerianPage() {
-  return <BilzerianCollectionPage />
+export default function BilzerianLegacyPage() {
+  permanentRedirect('/collection/bilzerian')
 }

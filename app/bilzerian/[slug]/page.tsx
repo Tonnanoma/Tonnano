@@ -1,14 +1,8 @@
-import { notFound } from 'next/navigation'
-import { BilzerianProductPage } from '@/components/bilzerian/product-page'
-import { BILZERIAN_PRODUCTS, getBilzerianProduct } from '@/lib/bilzerian'
+import { permanentRedirect } from 'next/navigation'
 
-export function generateStaticParams() {
-  return BILZERIAN_PRODUCTS.map(({ slug }) => ({ slug }))
-}
+type Props = { params: Promise<{ slug: string }> }
 
-export default async function BilzerianProductRoute({ params }: { params: Promise<{ slug: string }> }) {
+export default async function LegacyBilzerianProduct({ params }: Props) {
   const { slug } = await params
-  const product = getBilzerianProduct(slug)
-  if (!product) notFound()
-  return <BilzerianProductPage product={product} />
+  permanentRedirect(`/collection/bilzerian/${slug}`)
 }

@@ -41,6 +41,10 @@ export function WhitelistCtaButton({
     }
 
     const target = document.getElementById('whitelist')
+    if (!target) {
+      window.location.href = '/membership#join'
+      return
+    }
     if (target) {
       target.scrollIntoView({
         behavior: prefersReduced ? 'auto' : 'smooth',

@@ -3,18 +3,13 @@ import { Collection } from '@/components/tonnano/collection'
 import { Countdown } from '@/components/tonnano/countdown'
 import { Drop } from '@/components/tonnano/drop'
 import { Experience } from '@/components/tonnano/experience'
-import { Footer } from '@/components/tonnano/footer'
 import { Hero } from '@/components/tonnano/hero'
 import { InnerCode } from '@/components/tonnano/inner-code'
-import { Instagram } from '@/components/tonnano/instagram'
-import { Navbar } from '@/components/tonnano/navbar'
 import { Whitelist } from '@/components/tonnano/whitelist'
-import { LocaleProvider } from '@/components/tonnano/locale-provider'
 
 export default function Page() {
   return (
-    <LocaleProvider><Experience>
-      <Navbar />
+    <Experience>
       <main className="bg-background">
         <Hero />
         <About />
@@ -23,9 +18,7 @@ export default function Page() {
         <Collection />
         <Countdown />
         <Whitelist />
-        <Instagram />
       </main>
-      <Footer />
-    </Experience></LocaleProvider>
+    </Experience>
   )
 }
