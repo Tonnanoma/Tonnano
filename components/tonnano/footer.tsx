@@ -43,7 +43,7 @@ export function Footer() {
           </a>
           <SocialLinks className="mt-7 justify-center" />
           <nav className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-3 text-[0.65rem] tracking-wide-lux text-foreground/55" aria-label="Footer navigation">
-            <a href="/about" className="hover:text-primary">ABOUT</a><a href="/collection/inner-code" className="hover:text-primary">INNER CODE</a><a href="/collection/bilzerian" className="hover:text-primary">BILZERIAN</a><a href="/membership" className="hover:text-primary">MEMBERSHIP</a><a href="/privacy" className="hover:text-primary">PRIVACY</a><a href="/terms" className="hover:text-primary">TERMS</a><a href="/contact" className="hover:text-primary">CONTACT</a>
+            <a href="/about" className="hover:text-primary">ABOUT</a><a href="/collections/inner-code" className="hover:text-primary">INNER CODE</a><a href="/collections/bilzerian" className="hover:text-primary">BILZERIAN</a><a href="/membership" className="hover:text-primary">MEMBERSHIP</a><a href="/privacy" className="hover:text-primary">PRIVACY</a><a href="/terms" className="hover:text-primary">TERMS</a><a href="/contact" className="hover:text-primary">CONTACT</a>
           </nav>
         </Reveal>
       </div>
