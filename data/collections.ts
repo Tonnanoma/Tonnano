@@ -1,4 +1,4 @@
-import { IMAGES } from '@/lib/site'
+import { IMAGES } from '@/lib/images'
 
 export type CollectionProduct = {
   slug: string

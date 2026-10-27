@@ -1,6 +1,7 @@
 'use client'
 
-import { IMAGES, INSTAGRAM_URL } from '@/lib/site'
+import { IMAGES } from '@/lib/images'
+import { INSTAGRAM_URL } from '@/lib/site'
 import { Link2 as InstagramIcon } from 'lucide-react'
 import Image from 'next/image'
 import { Reveal } from './reveal'

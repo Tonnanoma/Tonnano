@@ -1,3 +1,5 @@
+/* Image URLs live in lib/images.ts. */
+/*
 export const IMAGES = {
   // Editorial / model campaign
   trioLounge:
@@ -39,6 +41,7 @@ export const IMAGES = {
   snakeFlat:
     'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260625-WA0016%281%29-NKqp1NbmhRPVz6Snwsv9Cm1yQJgWm8.jpg',
 } as const
+*/
 
 export const INSTAGRAM_URL = 'https://instagram.com/tonnano.official'
 export const FACEBOOK_URL = 'https://www.facebook.com/tonnanomorocco'
@@ -50,12 +53,3 @@ export const SOCIAL_LINKS = {
 } as const
 
 // Drop date — August 2026
-export const DROP_DATE = '2026-08-01T12:00:00Z'
-
-export const NAV_LINKS = [
-  { label: 'About', href: '#about' },
-  { label: 'Drop 01', href: '#drop' },
-  { label: 'Inner Code', href: '#inner-code' },
-  { label: 'Collection', href: '#collection' },
-  { label: 'Whitelist', href: '#whitelist' },
-] as const

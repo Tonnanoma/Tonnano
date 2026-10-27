@@ -1,6 +1,6 @@
 'use client'
 
-import { IMAGES } from '@/lib/site'
+import { IMAGES } from '@/lib/images'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import { useRef } from 'react'

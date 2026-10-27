@@ -1,6 +1,6 @@
 'use client'
 
-import { IMAGES } from '@/lib/site'
+import { IMAGES } from '@/lib/images'
 import { cn } from '@/lib/utils'
 import { X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'

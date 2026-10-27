@@ -54,7 +54,7 @@ function SuccessEmbers() {
   )
 }
 
-export function Whitelist() {
+export function JoinForm({ className }: { className?: string }) {
   const { messages: m } = useLocale()
   const formRef = useRef<HTMLFormElement>(null)
   const [agreed, setAgreed] = useState(false)
@@ -134,7 +134,7 @@ export function Whitelist() {
   }
 
   return (
-    <section id="whitelist" className="relative bg-background py-24 sm:py-36">
+    <section id="whitelist" className={cn('relative bg-background py-24 sm:py-36', className)}>
       <div className="mx-auto max-w-xl px-5 sm:px-8">
         <Reveal>
           <motion.div
@@ -355,3 +355,5 @@ export function Whitelist() {
     </section>
   )
 }
+
+export const Whitelist = JoinForm

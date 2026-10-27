@@ -10,60 +10,74 @@ export const runtime = "nodejs";
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const body = await request.json()
+    const honeypot = typeof body.website === 'string' ? body.website.trim() : ''
+    if (honeypot) {
+      return NextResponse.json({ success: false, error: 'Unable to process request.' }, { status: 400 })
+    }
+
+    const limit = (value: unknown, max: number) =>
+      typeof value === 'string' ? value.trim().slice(0, max) : ''
+    const firstName = limit(body.firstName, 80)
+    const lastName = limit(body.lastName, 80)
+    const country = limit(body.country, 80)
+    const city = limit(body.city, 80)
+    const phone = limit(body.phone, 40)
+    const email = limit(body.email, 254).toLowerCase()
+    const instagram = limit(body.instagram, 80)
 
     // Validation
 
-    if (!validateRequired(body.firstName)) {
+    if (!validateRequired(firstName)) {
       return NextResponse.json(
         { success: false, error: "First name is required." },
         { status: 400 }
       );
     }
 
-    if (!validateRequired(body.lastName)) {
+    if (!validateRequired(lastName)) {
       return NextResponse.json(
         { success: false, error: "Last name is required." },
         { status: 400 }
       );
     }
 
-    if (!validateRequired(body.country)) {
+    if (!validateRequired(country)) {
       return NextResponse.json(
         { success: false, error: "Country is required." },
         { status: 400 }
       );
     }
 
-    if (!validateRequired(body.city)) {
+    if (!validateRequired(city)) {
       return NextResponse.json(
         { success: false, error: "City is required." },
         { status: 400 }
       );
     }
 
-    if (!validateRequired(body.phone)) {
+    if (!validateRequired(phone)) {
       return NextResponse.json(
         { success: false, error: "Phone number is required." },
         { status: 400 }
       );
     }
 
-    if (!validatePhoneNumber(body.phone)) {
+    if (!validatePhoneNumber(phone)) {
       return NextResponse.json(
         { success: false, error: "Invalid phone number." },
         { status: 400 }
       );
     }
 
-    if (!validateRequired(body.email)) {
+    if (!validateRequired(email)) {
       return NextResponse.json(
         { success: false, error: "Email is required." },
         { status: 400 }
       );
     }
 
-    if (!validateEmail(body.email)) {
+    if (!validateEmail(email)) {
       return NextResponse.json(
         { success: false, error: "Invalid email address." },
         { status: 400 }
@@ -72,10 +86,14 @@ export async function POST(request: NextRequest) {
 
     // Duplicate email
 
+    if (!supabase) {
+      return NextResponse.json({ success: false, error: 'The membership service is unavailable.' }, { status: 503 })
+    }
+
     const { data: existingUser, error: duplicateError } = await supabase
       .from("whitelist_members")
       .select("id")
-      .eq("email", body.email.toLowerCase().trim())
+      .eq("email", email)
       .maybeSingle();
 
     if (duplicateError) {
@@ -110,13 +128,13 @@ export async function POST(request: NextRequest) {
       .from("whitelist_members")
       .insert([
         {
-          first_name: body.firstName.trim(),
-          last_name: body.lastName.trim(),
-          country: body.country.trim(),
-          city: body.city.trim(),
-          phone_number: body.phone.trim(),
-          email: body.email.toLowerCase().trim(),
-          instagram_username: body.instagram?.trim() || null,
+          first_name: firstName,
+          last_name: lastName,
+          country,
+          city,
+          phone_number: phone,
+          email,
+          instagram_username: instagram || null,
         },
       ])
       .select()
@@ -128,7 +146,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          error: error.message,
+          error: "Unable to complete your request right now.",
         },
         {
           status: 500,
