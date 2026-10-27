@@ -40,9 +40,9 @@ export const IMAGES = {
     'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260625-WA0016%281%29-NKqp1NbmhRPVz6Snwsv9Cm1yQJgWm8.jpg',
 } as const
 
-export const INSTAGRAM_URL = 'https://instagram.com/tonnano.official'
-export const FACEBOOK_URL = 'https://www.facebook.com/tonnanomorocco'
-export const LINKEDIN_URL = 'https://linkedin.com/company/tonnanomorocco'
+export const INSTAGRAM_URL = 'https://www.instagram.com/tonnano.official/'
+export const FACEBOOK_URL = 'https://web.facebook.com/tonnanomorocco'
+export const LINKEDIN_URL = 'https://www.linkedin.com/company/tonnanomorocco'
 export const SOCIAL_LINKS = {
   instagram: INSTAGRAM_URL,
   facebook: FACEBOOK_URL,

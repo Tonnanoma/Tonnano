@@ -61,7 +61,7 @@ export function WhitelistCtaButton({
 
   return (
     <a
-      href="#whitelist"
+      href="/membership#join"
       onClick={handleClick}
       className={cn(
         'group relative isolate inline-block overflow-hidden font-sans text-[0.65rem] tracking-wide-lux transition-all duration-300 active:scale-[0.97]',

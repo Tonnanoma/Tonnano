@@ -1,26 +1,83 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { Menu, X } from 'lucide-react'
-import { AnimatePresence, motion } from 'motion/react'
-import { WhitelistCtaButton } from './whitelist-cta-button'
+import { ChevronDown, ChevronUp, X, ArrowUpRight } from 'lucide-react'
+import { Wordmark } from './wordmark'
 import { SocialLinks } from './social-links'
+import { WhitelistCtaButton } from './whitelist-cta-button'
 import { useLocale } from './locale-provider'
-import { EASE, usePrefersReducedMotion } from './animation'
+import { localeNames, locales, type Locale } from '@/lib/i18n'
+import { INNER_CODE_PRODUCTS } from '@/data/collections'
 
-const links = [{ href: '/about', label: 'ABOUT' }, { href: '/membership', label: 'MEMBERSHIP' }]
+const collectionLinks = [
+  { href: '/collection/inner-code', label: 'INNER CODE', meta: '06 PIECES · CHAPTER 01', image: INNER_CODE_PRODUCTS[0]?.images[0] },
+  { href: '/collection/bilzerian', label: 'BILZERIAN', meta: 'COLLECTION · CHAPTER 02', image: INNER_CODE_PRODUCTS[1]?.images[0] },
+]
+
+const flags: Record<Locale, string> = { en: '🇬🇧', fr: '🇫🇷', ar: '🇲🇦', es: '🇪🇸', de: '🇩🇪', it: '🇮🇹', pt: '🇵🇹', nl: '🇳🇱', tr: '🇹🇷', zh: '🇨🇳', ja: '🇯🇵', ru: '🇷🇺' }
+
+function TextLink({ href, children, onClick }: { href: string; children: React.ReactNode; onClick?: () => void }) {
+  return <Link href={href} onClick={onClick} className="tn-roll-link"><span>{children}</span><span aria-hidden>{children}</span></Link>
+}
 
 export function Navbar() {
-  const [open, setOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [collectionOpen, setCollectionOpen] = useState(false)
+  const [languageOpen, setLanguageOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const { locale, setLocale, localeNames } = useLocale()
-  const reduced = usePrefersReducedMotion()
-  useEffect(() => { const onScroll = () => setScrolled(window.scrollY > 32); onScroll(); window.addEventListener('scroll', onScroll, { passive: true }); return () => window.removeEventListener('scroll', onScroll) }, [])
-  useEffect(() => { document.body.style.overflow = open ? 'hidden' : ''; return () => { document.body.style.overflow = '' } }, [open])
-  const close = () => setOpen(false)
-  return <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? 'bg-background/85 shadow-sm backdrop-blur-xl' : 'bg-transparent'}`}>
-    <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:h-20 sm:px-8"><Link href="/" className="font-sans text-sm tracking-luxury text-primary">TONNANO</Link><div className="hidden items-center gap-7 md:flex"><div className="group relative"><button className="text-[0.65rem] tracking-wide-lux text-foreground/70 hover:text-foreground">COLLECTION⌄</button><div className="invisible absolute left-0 top-full w-44 border border-border bg-background/95 p-2 opacity-0 shadow-xl transition-all group-hover:visible group-hover:opacity-100"><Link href="/collection/inner-code" className="block px-3 py-3 text-[0.65rem] tracking-wide-lux hover:bg-secondary">INNER CODE</Link><Link href="/collection/bilzerian" className="block px-3 py-3 text-[0.65rem] tracking-wide-lux hover:bg-secondary">BILZERIAN</Link></div></div>{links.map((link) => <Link key={link.href} href={link.href} className="text-[0.65rem] tracking-wide-lux text-foreground/70 hover:text-foreground">{link.label}</Link>)}<label className="sr-only" htmlFor="language-select">Language</label><select id="language-select" value={locale} onChange={(event) => setLocale(event.target.value as typeof locale)} className="max-w-24 bg-transparent text-[0.65rem] tracking-wide-lux outline-none">{Object.entries(localeNames).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select><SocialLinks /><WhitelistCtaButton className="ml-1" /></div><button type="button" onClick={() => setOpen(true)} className="min-h-11 min-w-11 md:hidden" aria-label="Open menu"><Menu className="mx-auto h-6 w-6" strokeWidth={1.2} /></button></nav>
-    <AnimatePresence>{open && <motion.div className="fixed inset-0 z-50 flex min-h-screen flex-col overflow-y-auto bg-background px-7 py-5 md:hidden" initial={reduced ? { opacity: 1 } : { opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .55, ease: EASE as any }}><div className="flex items-center justify-between"><Link href="/" onClick={close} className="text-sm tracking-luxury text-primary">TONNANO</Link><button type="button" onClick={close} aria-label="Close menu" className="min-h-11 min-w-11"><X className="mx-auto h-6 w-6" strokeWidth={1.2} /></button></div><div className="flex flex-1 flex-col justify-center gap-5 py-10">{links.map((link, index) => <motion.div key={link.href} initial={reduced ? false : { opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * .06, duration: .5 }}><Link href={link.href} onClick={close} className="font-serif text-5xl">{link.label}</Link></motion.div>)}<div><p className="mb-3 text-[0.65rem] tracking-luxury text-primary">COLLECTION</p><div className="flex gap-4"><Link href="/collection/inner-code" onClick={close} className="text-sm">INNER CODE</Link><Link href="/collection/bilzerian" onClick={close} className="text-sm">BILZERIAN</Link></div></div><WhitelistCtaButton onNavigate={close} /></div><div className="flex items-center justify-between border-t border-border pt-5"><select value={locale} onChange={(event) => setLocale(event.target.value as typeof locale)} className="bg-transparent text-xs outline-none">{Object.entries(localeNames).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select><SocialLinks /></div></motion.div>}</AnimatePresence>
+  const [progress, setProgress] = useState(0)
+  const languageRef = useRef<HTMLDivElement>(null)
+  const collectionRef = useRef<HTMLDivElement>(null)
+  const { locale, setLocale } = useLocale()
+
+  useEffect(() => {
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      setProgress(max > 0 ? (window.scrollY / max) * 100 : 0)
+      setScrolled(window.scrollY > 24)
+    }
+    const onClick = (event: MouseEvent) => {
+      if (!languageRef.current?.contains(event.target as Node)) setLanguageOpen(false)
+      if (!collectionRef.current?.contains(event.target as Node)) setCollectionOpen(false)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    document.addEventListener('click', onClick)
+    onScroll()
+    return () => { window.removeEventListener('scroll', onScroll); document.removeEventListener('click', onClick) }
+  }, [])
+
+  useEffect(() => { document.body.style.overflow = menuOpen ? 'hidden' : ''; return () => { document.body.style.overflow = '' } }, [menuOpen])
+  const closeMenu = () => setMenuOpen(false)
+  const changeLocale = (next: Locale) => { setLocale(next); setLanguageOpen(false); closeMenu() }
+
+  return <header className={`tn-header ${scrolled ? 'tn-header-scrolled' : ''}`}>
+    <div className="tn-progress" style={{ transform: `scaleX(${progress / 100})` }} />
+    <nav className="tn-nav" aria-label="Primary navigation">
+      <button className="tn-mobile-menu" type="button" aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}><span className="tn-menu-lines" /><span>MENU</span></button>
+      <div className="tn-desktop-links">
+        <TextLink href="/about">ABOUT</TextLink>
+        <TextLink href="/drop">DROP 01</TextLink>
+        <div ref={collectionRef} className="tn-nav-popover">
+          <button className="tn-roll-link" aria-expanded={collectionOpen} onClick={(event) => { event.stopPropagation(); setCollectionOpen(!collectionOpen); setLanguageOpen(false) }}><span>COLLECTION <ChevronDown aria-hidden /></span><span aria-hidden>COLLECTION <ChevronDown /></span></button>
+          {collectionOpen && <div className="tn-mega-menu">
+            <div className="tn-mega-rows">{collectionLinks.map((item, index) => <Link key={item.href} href={item.href} onClick={() => setCollectionOpen(false)} className="tn-mega-row"><span><strong>{item.label}</strong><small>{item.meta}</small></span><ArrowUpRight /></Link>)}</div>
+            <div className="tn-mega-image" style={{ backgroundImage: `url(${collectionLinks[0].image})` }} aria-label="TONNANO campaign" />
+            <div className="tn-mega-footer"><Link href="/collections">VIEW ALL PIECES <ArrowUpRight /></Link><TextLink href="/membership">MEMBERSHIP</TextLink></div>
+          </div>}
+        </div>
+        <TextLink href="/membership">MEMBERSHIP</TextLink>
+      </div>
+      <Link href="/" className="tn-logo" aria-label="TONNANO home"><Wordmark /></Link>
+      <div className="tn-desktop-actions">
+        <div ref={languageRef} className="tn-language"><button className="tn-language-trigger" aria-expanded={languageOpen} onClick={(event) => { event.stopPropagation(); setLanguageOpen(!languageOpen); setCollectionOpen(false) }}><span>{flags[locale]}</span><span>{locale.toUpperCase()}</span>{languageOpen ? <ChevronUp /> : <ChevronDown />}</button>{languageOpen && <div className="tn-language-panel">{locales.map((item) => <button key={item} className={item === locale ? 'active' : ''} onClick={() => changeLocale(item)}><span>{flags[item]}</span><span>{localeNames[item]}</span><small>{item.toUpperCase()}</small></button>)}</div>}</div>
+        <Link href="/bag" className="tn-bag">BAG (0)</Link>
+        <WhitelistCtaButton variant="solid" />
+      </div>
+      <div className="tn-mobile-actions"><button className="tn-flag-button" onClick={() => setLanguageOpen(!languageOpen)} aria-label="Change language">{flags[locale]}</button><Link href="/bag" className="tn-bag-icon" aria-label="Bag">0</Link></div>
+    </nav>
+    {languageOpen && <div className="tn-mobile-language">{locales.map((item) => <button key={item} className={item === locale ? 'active' : ''} onClick={() => changeLocale(item)}><span>{flags[item]}</span><small>{item.toUpperCase()}</small></button>)}</div>}
+    {menuOpen && <div className="tn-mobile-overlay"><div className="tn-mobile-top"><Wordmark /><button onClick={closeMenu} aria-label="Close menu"><X /></button></div><div className="tn-mobile-links"><TextLink href="/about" onClick={closeMenu}>ABOUT</TextLink><TextLink href="/drop" onClick={closeMenu}>DROP 01</TextLink><TextLink href="/collection/inner-code" onClick={closeMenu}>INNER CODE</TextLink><TextLink href="/collection/bilzerian" onClick={closeMenu}>BILZERIAN</TextLink><TextLink href="/membership" onClick={closeMenu}>MEMBERSHIP</TextLink></div><div className="tn-mobile-bottom"><div className="tn-language-grid">{locales.map((item) => <button key={item} className={item === locale ? 'active' : ''} onClick={() => changeLocale(item)}><span>{flags[item]}</span>{item.toUpperCase()}</button>)}</div><WhitelistCtaButton variant="solid" onNavigate={closeMenu} /><SocialLinks /><small>© TONNANO · MADE IN MOROCCO</small></div></div>}
+    <button className="tn-top-button" aria-label="Back to top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>↑</button>
   </header>
 }
