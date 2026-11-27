@@ -2,7 +2,6 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono, Cormorant_Garamond } from 'next/font/google'
 import './globals.css'
-import { SiteShell } from '@/components/tonnano/site-shell'
 import { SITE_URL } from '@/config/site'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
@@ -19,12 +18,9 @@ const cormorant = Cormorant_Garamond({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: {
-    default: 'TONNANO — Time Builds Legends',
-    template: '%s · TONNANO',
-  },
+  title: 'TONNANO',
   description:
-    'TONNANO. Luxury streetwear crafted in Morocco. Limited production, timeless design. Join the Inner Code ahead of Drop 01, August 2026. Available in English, French, Arabic, Spanish, German, Italian, Portuguese, Dutch, Turkish, Chinese, Japanese and Russian.',
+    'TONNANO — luxury streetwear, made in Morocco. Inner Code and Bilzerian.',
   keywords: [
     'TONNANO',
     'luxury streetwear',
@@ -70,7 +66,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} bg-background`}
     >
       <body className="font-sans antialiased bg-background text-foreground">
-        <SiteShell>{children}</SiteShell>
+        {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
